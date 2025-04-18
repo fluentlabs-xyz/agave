@@ -1,10 +1,10 @@
 use core::fmt;
 #[cfg(feature = "frozen-abi")]
 use solana_frozen_abi_macro::{AbiEnumVisitor, AbiExample};
-#[cfg(feature = "std")]
+// #[cfg(feature = "std")]
 use {
+    alloc::string::{String, ToString},
     num_traits::ToPrimitive,
-    std::string::{String, ToString},
 };
 
 /// Builtin return values occupy the upper 32 bits
@@ -54,7 +54,7 @@ pub const INCORRECT_AUTHORITY: u64 = to_builtin!(26);
 /// an error be consistent across software versions.  For example, it is
 /// dangerous to include error strings from 3rd party crates because they could
 /// change at any time and changes to them are difficult to detect.
-#[cfg(feature = "std")]
+// #[cfg(feature = "std")]
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample, AbiEnumVisitor))]
 #[cfg_attr(
     feature = "serde",
@@ -242,10 +242,10 @@ pub enum InstructionError {
     // conversions must also be added
 }
 
-#[cfg(feature = "std")]
-impl std::error::Error for InstructionError {}
+// #[cfg(feature = "std")]
+impl core::error::Error for InstructionError {}
 
-#[cfg(feature = "std")]
+// #[cfg(feature = "std")]
 impl fmt::Display for InstructionError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
@@ -385,7 +385,7 @@ impl fmt::Display for InstructionError {
     }
 }
 
-#[cfg(feature = "std")]
+// #[cfg(feature = "std")]
 impl<T> From<T> for InstructionError
 where
     T: ToPrimitive,
@@ -441,8 +441,8 @@ pub enum LamportsError {
     ArithmeticOverflow,
 }
 
-#[cfg(feature = "std")]
-impl std::error::Error for LamportsError {}
+// #[cfg(feature = "std")]
+impl core::error::Error for LamportsError {}
 
 impl fmt::Display for LamportsError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -453,7 +453,7 @@ impl fmt::Display for LamportsError {
     }
 }
 
-#[cfg(feature = "std")]
+// #[cfg(feature = "std")]
 impl From<LamportsError> for InstructionError {
     fn from(error: LamportsError) -> Self {
         match error {

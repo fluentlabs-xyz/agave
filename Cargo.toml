@@ -248,7 +248,8 @@ hashbrown = { version = "0.15.1", default-features = false, features = [
 subtle = { path = "../subtle", default-features = false }
 #subtle = "2.6.1"
 bs58 = { version = "0.5.1", default-features = false }
-bv = "0.11.1"
+#bv = { version = "0.11.1", default-features = false }
+bv = { git = "https://github.com/fluentlabs-xyz/bv-rs", branch = "feat/svm-0.11.1", default-features = false }
 byte-unit = "4.0.19"
 bytecount = "0.6.8"
 bytemuck = "1.19.0"
@@ -409,7 +410,7 @@ soketto = "0.7"
 solana-account = { path = "sdk/account", version = "=2.1.18" }
 solana-account-decoder = { path = "account-decoder", version = "=2.1.18" }
 solana-account-decoder-client-types = { path = "account-decoder-client-types", version = "=2.1.18" }
-solana-account-info = { path = "sdk/account-info", version = "=2.1.18" }
+solana-account-info = { path = "sdk/account-info", version = "=2.1.18", default-features = false }
 solana-accounts-db = { path = "accounts-db", version = "=2.1.18" }
 solana-address-lookup-table-program = { path = "programs/address-lookup-table", version = "=2.1.18" }
 solana-atomic-u64 = { path = "sdk/atomic-u64", version = "=2.1.18" }
@@ -486,8 +487,8 @@ solana-poh = { path = "poh", version = "=2.1.18" }
 solana-poseidon = { path = "poseidon", version = "=2.1.18" }
 solana-precompile-error = { path = "sdk/precompile-error", version = "=2.1.18" }
 solana-program = { path = "sdk/program", version = "=2.1.18", default-features = false }
-solana-program-error = { path = "sdk/program-error", version = "=2.1.18" }
-solana-program-memory = { path = "sdk/program-memory", version = "=2.1.18" }
+solana-program-error = { path = "sdk/program-error", version = "=2.1.18", default-features = false }
+solana-program-memory = { path = "sdk/program-memory", version = "=2.1.18", default-features = false }
 solana-program-option = { path = "sdk/program-option", version = "=2.1.18" }
 solana-program-pack = { path = "sdk/program-pack", version = "=2.1.18" }
 solana-program-runtime = { path = "program-runtime", version = "=2.1.18" }
@@ -504,8 +505,8 @@ solana-serde-varint = { path = "sdk/serde-varint", version = "=2.1.18" }
 solana-serialize-utils = { path = "sdk/serialize-utils", version = "=2.1.18" }
 solana-sha256-hasher = { path = "sdk/sha256-hasher", version = "=2.1.18" }
 solana-signature = { path = "sdk/signature", version = "=2.1.18", default-features = false }
-solana-slot-hashes = { path = "sdk/slot-hashes", version = "=2.1.18" }
-solana-slot-history = { path = "sdk/slot-history", version = "=2.1.18" }
+solana-slot-hashes = { path = "sdk/slot-hashes", version = "=2.1.18", default-features = false }
+solana-slot-history = { path = "sdk/slot-history", version = "=2.1.18", default-features = false }
 solana-timings = { path = "timings", version = "=2.1.18" }
 solana-unified-scheduler-logic = { path = "unified-scheduler-logic", version = "=2.1.18" }
 solana-unified-scheduler-pool = { path = "unified-scheduler-pool", version = "=2.1.18" }

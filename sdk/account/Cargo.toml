@@ -12,7 +12,7 @@ edition = { workspace = true }
 [dependencies]
 bincode = { workspace = true, optional = true }
 qualifier_attr = { workspace = true, optional = true }
-serde = { workspace = true, optional = true }
+serde = { workspace = true, default-features = false, optional = true }
 serde_bytes = { workspace = true, optional = true }
 serde_derive = { workspace = true, optional = true }
 solana-frozen-abi = { workspace = true, optional = true }

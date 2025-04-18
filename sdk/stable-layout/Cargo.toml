@@ -10,9 +10,7 @@ license = { workspace = true }
 edition = { workspace = true }
 
 [dependencies]
-solana-instruction = { workspace = true, default-features = false, features = [
-    "std",
-] }
+solana-instruction = { workspace = true, default-features = false, features = [] }
 solana-pubkey = { workspace = true, default-features = false }
 
 [dev-dependencies]

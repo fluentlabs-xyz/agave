@@ -11,9 +11,9 @@ edition = { workspace = true }
 
 [dependencies]
 bincode = { workspace = true, optional = true }
-serde = { workspace = true, optional = true }
-solana-program-error = { workspace = true }
-solana-program-memory = { workspace = true }
+serde = { workspace = true, default-features = false, optional = true }
+solana-program-error = { workspace = true, default-features = false }
+solana-program-memory = { workspace = true, default-features = false }
 solana-pubkey = { workspace = true, default-features = false }
 
 [features]

@@ -11,8 +11,8 @@ edition = { workspace = true }
 
 [dependencies]
 log = { workspace = true }
-serde = { workspace = true, optional = true }
-serde_derive = { workspace = true, optional = true }
+serde = { workspace = true, default-features = false, optional = true }
+serde_derive = { workspace = true, default-features = false, optional = true }
 solana-frozen-abi = { workspace = true, optional = true }
 solana-frozen-abi-macro = { workspace = true, optional = true }
 

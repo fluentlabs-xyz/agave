@@ -10,13 +10,17 @@ license = { workspace = true }
 edition = { workspace = true }
 
 [dependencies]
-bv = { workspace = true }
-serde = { workspace = true, optional = true }
-serde_derive = { workspace = true, optional = true }
-solana-sysvar-id = { workspace = true, optional = true }
+bv = { workspace = true, default-features = false }
+serde = { workspace = true, default-features = false, features = [], optional = true }
+serde_derive = { workspace = true, default-features = false, optional = true }
+solana-sysvar-id = { workspace = true, default-features = false, optional = true }
 
 [features]
-serde = ["dep:serde", "dep:serde_derive", "bv/serde"]
+serde = [
+    "dep:serde",
+    "dep:serde_derive",
+    "bv/serde",
+]
 sysvar = ["dep:solana-sysvar-id"]
 
 [package.metadata.docs.rs]

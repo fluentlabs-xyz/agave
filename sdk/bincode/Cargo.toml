@@ -10,11 +10,9 @@ license = { workspace = true }
 edition = { workspace = true }
 
 [dependencies]
-bincode = { workspace = true }
-serde = { workspace = true }
-solana-instruction = { workspace = true, default-features = false, features = [
-    "std",
-] }
+bincode = { workspace = true, default-features = false }
+serde = { workspace = true, default-features = false }
+solana-instruction = { workspace = true, default-features = false }
 
 [dev-dependencies]
 solana-program = { path = "../program" }
