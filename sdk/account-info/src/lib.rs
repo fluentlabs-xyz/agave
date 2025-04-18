@@ -1,15 +1,15 @@
-//! Account information.
-#![cfg_attr(docsrs, feature(doc_auto_cfg))]
+#[cfg_attr(not(feature = "std"), no_std)]
+extern crate alloc;
 use {
+    alloc::rc::Rc,
+    core::{
+        cell::{Ref, RefCell, RefMut},
+        fmt,
+        slice::from_raw_parts_mut,
+    },
     solana_program_error::ProgramError,
     solana_program_memory::sol_memset,
     solana_pubkey::Pubkey,
-    std::{
-        cell::{Ref, RefCell, RefMut},
-        fmt,
-        rc::Rc,
-        slice::from_raw_parts_mut,
-    },
 };
 pub mod debug_account_data;
 

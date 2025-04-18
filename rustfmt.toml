@@ -1,2 +1,2 @@
-imports_granularity = "One"
-group_imports = "One"
+imports_granularity = "Preserve"
+group_imports = "Preserve"

@@ -2,10 +2,10 @@
 
 #[cfg(test)]
 mod tests {
-    use std::{
-        mem::{align_of, size_of},
-        rc::Rc,
-    };
+    extern crate alloc;
+    use alloc::rc::Rc;
+    use core::mem::align_of;
+    use core::mem::size_of;
 
     #[test]
     fn test_memory_layout() {

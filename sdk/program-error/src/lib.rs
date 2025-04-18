@@ -7,6 +7,7 @@ use borsh::io::Error as BorshIoError;
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
 use {
+    core::convert::TryFrom,
     core::fmt,
     num_traits::FromPrimitive,
     solana_decode_error::DecodeError,
@@ -23,10 +24,9 @@ use {
     },
     solana_msg::msg,
     solana_pubkey::PubkeyError,
-    std::convert::TryFrom,
 };
 
-pub type ProgramResult = std::result::Result<(), ProgramError>;
+pub type ProgramResult = core::result::Result<(), ProgramError>;
 
 /// Reasons the program may fail
 #[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
@@ -63,7 +63,7 @@ pub enum ProgramError {
     IncorrectAuthority,
 }
 
-impl std::error::Error for ProgramError {}
+impl core::error::Error for ProgramError {}
 
 impl fmt::Display for ProgramError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -125,13 +125,13 @@ impl fmt::Display for ProgramError {
 pub trait PrintProgramError {
     fn print<E>(&self)
     where
-        E: 'static + std::error::Error + DecodeError<E> + PrintProgramError + FromPrimitive;
+        E: 'static + core::error::Error + DecodeError<E> + PrintProgramError + FromPrimitive;
 }
 
 impl PrintProgramError for ProgramError {
     fn print<E>(&self)
     where
-        E: 'static + std::error::Error + DecodeError<E> + PrintProgramError + FromPrimitive,
+        E: 'static + core::error::Error + DecodeError<E> + PrintProgramError + FromPrimitive,
     {
         match self {
             Self::Custom(error) => {

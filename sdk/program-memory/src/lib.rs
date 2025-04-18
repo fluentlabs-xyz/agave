@@ -40,11 +40,11 @@ pub mod stubs {
             is_nonoverlapping(src as usize, n, dst as usize, n),
             "memcpy does not support overlapping regions"
         );
-        std::ptr::copy_nonoverlapping(src, dst, n);
+        core::ptr::copy_nonoverlapping(src, dst, n);
     }
     /// # Safety
     pub unsafe fn sol_memmove(dst: *mut u8, src: *const u8, n: usize) {
-        std::ptr::copy(src, dst, n);
+        core::ptr::copy(src, dst, n);
     }
     /// # Safety
     pub unsafe fn sol_memcmp(s1: *const u8, s2: *const u8, n: usize, result: *mut i32) {
@@ -62,7 +62,7 @@ pub mod stubs {
     }
     /// # Safety
     pub unsafe fn sol_memset(s: *mut u8, c: u8, n: usize) {
-        let s = std::slice::from_raw_parts_mut(s, n);
+        let s = core::slice::from_raw_parts_mut(s, n);
         for val in s.iter_mut().take(n) {
             *val = c;
         }

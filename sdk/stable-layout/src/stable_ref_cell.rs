@@ -2,10 +2,9 @@
 
 #[cfg(test)]
 mod tests {
-    use std::{
-        cell::RefCell,
-        mem::{align_of, size_of},
-    };
+    use core::cell::RefCell;
+    use core::mem::align_of;
+    use core::mem::size_of;
 
     #[test]
     fn test_memory_layout() {

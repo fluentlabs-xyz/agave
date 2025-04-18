@@ -18,7 +18,7 @@ program = []
 
 default = [
     "borsh",
-    "full",  # functionality that is not compatible or needed for on-chain programs
+    "full", # functionality that is not compatible or needed for on-chain programs
 ]
 full = [
     "byteorder",
@@ -63,7 +63,7 @@ bytemuck_derive = { workspace = true }
 byteorder = { workspace = true, optional = true }
 chrono = { workspace = true, features = ["alloc"], optional = true }
 curve25519-dalek = { workspace = true, optional = true }
-digest = { workspace = true, optional = true }
+digest = { version = "0.10.7", default-features = false, features = ["alloc"], optional = true }
 ed25519-dalek = { workspace = true, optional = true }
 ed25519-dalek-bip32 = { workspace = true, optional = true }
 generic-array = { workspace = true, features = [

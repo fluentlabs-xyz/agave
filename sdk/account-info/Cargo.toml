@@ -17,6 +17,7 @@ solana-program-memory = { workspace = true }
 solana-pubkey = { workspace = true, default-features = false }
 
 [features]
+std = []
 bincode = ["dep:bincode", "dep:serde"]
 
 [package.metadata.docs.rs]

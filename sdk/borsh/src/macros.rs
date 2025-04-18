@@ -16,7 +16,7 @@ macro_rules! impl_get_packed_len_v0 {
         /// Get packed length for the given BorshSchema Declaration
         fn get_declaration_packed_len(
             declaration: &str,
-            definitions: &std::collections::HashMap<$borsh::schema::Declaration, $borsh::schema::Definition>,
+            definitions: &hashbrown::HashMap<$borsh::schema::Declaration, $borsh::schema::Definition>,
         ) -> usize {
             match definitions.get(declaration) {
                 Some($borsh::schema::Definition::Array { length, elements }) => {
@@ -187,7 +187,8 @@ macro_rules! impl_tests {
         extern crate alloc;
         use {
             super::*,
-            std::{collections::HashMap, mem::size_of},
+            core::mem::size_of,
+            hashbrown::HashMap,
             $borsh::{BorshDeserialize, BorshSerialize},
             $borsh_io::ErrorKind,
         };

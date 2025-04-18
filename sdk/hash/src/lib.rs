@@ -3,14 +3,20 @@
 #![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 #[cfg(feature = "borsh")]
 use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
-#[cfg(any(feature = "std", target_arch = "wasm32"))]
+#[cfg(not(feature = "std"))]
+extern crate alloc;
+#[cfg(any(feature = "std"))]
 extern crate std;
 #[cfg(feature = "bytemuck")]
 use bytemuck_derive::{Pod, Zeroable};
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
-#[cfg(any(all(feature = "borsh", feature = "std"), target_arch = "wasm32"))]
-use std::string::ToString;
+#[cfg(target_arch = "wasm32")]
+use {
+    alloc::{boxed::Box, format, string::String, string::ToString, vec},
+    js_sys::{Array, Uint8Array},
+    wasm_bindgen::{prelude::*, JsCast},
+};
 use {
     core::{
         convert::TryFrom,
@@ -18,12 +24,6 @@ use {
         str::{from_utf8, FromStr},
     },
     solana_sanitize::Sanitize,
-};
-#[cfg(target_arch = "wasm32")]
-use {
-    js_sys::{Array, Uint8Array},
-    std::{boxed::Box, format, string::String, vec},
-    wasm_bindgen::{prelude::*, JsCast},
 };
 
 /// Size of a hash in bytes.
@@ -94,8 +94,8 @@ pub enum ParseHashError {
     Invalid,
 }
 
-#[cfg(feature = "std")]
-impl std::error::Error for ParseHashError {}
+// #[cfg(feature = "std")]
+impl core::error::Error for ParseHashError {}
 
 impl fmt::Display for ParseHashError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
