@@ -1,4 +1,5 @@
-#[cfg_attr(not(feature = "std"), no_std)]
+#![cfg_attr(not(feature = "std"), no_std)]
+// #![no_std]
 extern crate alloc;
 use {
     alloc::rc::Rc,
@@ -189,7 +190,7 @@ impl<'a> AccountInfo<'a> {
     pub fn assign(&self, new_owner: &Pubkey) {
         // Set the non-mut owner field
         unsafe {
-            std::ptr::write_volatile(
+            core::ptr::write_volatile(
                 self.owner as *const Pubkey as *mut [u8; 32],
                 new_owner.to_bytes(),
             );
@@ -326,7 +327,7 @@ impl<'a, T: Account> IntoAccountInfo<'a> for &'a mut (Pubkey, T) {
 /// # )?;
 /// # Ok::<(), ProgramError>(())
 /// ```
-pub fn next_account_info<'a, 'b, I: Iterator<Item = &'a AccountInfo<'b>>>(
+pub fn next_account_info<'a, 'b, I: Iterator<Item=&'a AccountInfo<'b>>>(
     iter: &mut I,
 ) -> Result<I::Item, ProgramError> {
     iter.next().ok_or(ProgramError::NotEnoughAccountKeys)
@@ -377,7 +378,7 @@ pub fn next_account_info<'a, 'b, I: Iterator<Item = &'a AccountInfo<'b>>>(
 /// # Ok::<(), ProgramError>(())
 /// ```
 pub fn next_account_infos<'a, 'b: 'a>(
-    iter: &mut std::slice::Iter<'a, AccountInfo<'b>>,
+    iter: &mut core::slice::Iter<'a, AccountInfo<'b>>,
     count: usize,
 ) -> Result<&'a [AccountInfo<'b>], ProgramError> {
     let accounts = iter.as_slice();

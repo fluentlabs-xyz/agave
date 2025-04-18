@@ -1,5 +1,5 @@
 //! The [`ProgramError`] type and related definitions.
-
+#![cfg_attr(not(feature = "std"), no_std)]
 #![allow(clippy::arithmetic_side_effects)]
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 #[cfg(feature = "borsh")]
@@ -68,56 +68,56 @@ impl core::error::Error for ProgramError {}
 impl fmt::Display for ProgramError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            ProgramError::Custom(num) => write!(f,"Custom program error: {num:#x}"),
+            ProgramError::Custom(num) => write!(f, "Custom program error: {num:#x}"),
             ProgramError::InvalidArgument
-             => f.write_str("The arguments provided to a program instruction were invalid"),
+            => f.write_str("The arguments provided to a program instruction were invalid"),
             ProgramError::InvalidInstructionData
-             => f.write_str("An instruction's data contents was invalid"),
+            => f.write_str("An instruction's data contents was invalid"),
             ProgramError::InvalidAccountData
-             => f.write_str("An account's data contents was invalid"),
+            => f.write_str("An account's data contents was invalid"),
             ProgramError::AccountDataTooSmall
-             => f.write_str("An account's data was too small"),
+            => f.write_str("An account's data was too small"),
             ProgramError::InsufficientFunds
-             => f.write_str("An account's balance was too small to complete the instruction"),
+            => f.write_str("An account's balance was too small to complete the instruction"),
             ProgramError::IncorrectProgramId
-             => f.write_str("The account did not have the expected program id"),
+            => f.write_str("The account did not have the expected program id"),
             ProgramError::MissingRequiredSignature
-             => f.write_str("A signature was required but not found"),
+            => f.write_str("A signature was required but not found"),
             ProgramError::AccountAlreadyInitialized
-             => f.write_str("An initialize instruction was sent to an account that has already been initialized"),
+            => f.write_str("An initialize instruction was sent to an account that has already been initialized"),
             ProgramError::UninitializedAccount
-             => f.write_str("An attempt to operate on an account that hasn't been initialized"),
+            => f.write_str("An attempt to operate on an account that hasn't been initialized"),
             ProgramError::NotEnoughAccountKeys
-             => f.write_str("The instruction expected additional account keys"),
+            => f.write_str("The instruction expected additional account keys"),
             ProgramError::AccountBorrowFailed
-             => f.write_str("Failed to borrow a reference to account data, already borrowed"),
+            => f.write_str("Failed to borrow a reference to account data, already borrowed"),
             ProgramError::MaxSeedLengthExceeded
-             => f.write_str("Length of the seed is too long for address generation"),
+            => f.write_str("Length of the seed is too long for address generation"),
             ProgramError::InvalidSeeds
-             => f.write_str("Provided seeds do not result in a valid address"),
-            ProgramError::BorshIoError(s) =>  write!(f, "IO Error: {s}"),
+            => f.write_str("Provided seeds do not result in a valid address"),
+            ProgramError::BorshIoError(s) => write!(f, "IO Error: {s}"),
             ProgramError::AccountNotRentExempt
-             => f.write_str("An account does not have enough lamports to be rent-exempt"),
+            => f.write_str("An account does not have enough lamports to be rent-exempt"),
             ProgramError::UnsupportedSysvar
-             => f.write_str("Unsupported sysvar"),
+            => f.write_str("Unsupported sysvar"),
             ProgramError::IllegalOwner
-             => f.write_str("Provided owner is not allowed"),
+            => f.write_str("Provided owner is not allowed"),
             ProgramError::MaxAccountsDataAllocationsExceeded
-             => f.write_str("Accounts data allocations exceeded the maximum allowed per transaction"),
+            => f.write_str("Accounts data allocations exceeded the maximum allowed per transaction"),
             ProgramError::InvalidRealloc
-             => f.write_str("Account data reallocation was invalid"),
+            => f.write_str("Account data reallocation was invalid"),
             ProgramError::MaxInstructionTraceLengthExceeded
-             => f.write_str("Instruction trace length exceeded the maximum allowed per transaction"),
+            => f.write_str("Instruction trace length exceeded the maximum allowed per transaction"),
             ProgramError::BuiltinProgramsMustConsumeComputeUnits
-             => f.write_str("Builtin programs must consume compute units"),
+            => f.write_str("Builtin programs must consume compute units"),
             ProgramError::InvalidAccountOwner
-             => f.write_str("Invalid account owner"),
+            => f.write_str("Invalid account owner"),
             ProgramError::ArithmeticOverflow
-             => f.write_str("Program arithmetic overflowed"),
+            => f.write_str("Program arithmetic overflowed"),
             ProgramError::Immutable
-             => f.write_str("Account is immutable"),
+            => f.write_str("Account is immutable"),
             ProgramError::IncorrectAuthority
-             => f.write_str("Incorrect authority provided"),
+            => f.write_str("Incorrect authority provided"),
         }
     }
 }

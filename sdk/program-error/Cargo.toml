@@ -20,6 +20,7 @@ solana-msg = { workspace = true }
 solana-pubkey = { workspace = true, default-features = false }
 
 [features]
+std = []
 borsh = ["dep:borsh"]
 serde = ["dep:serde", "dep:serde_derive"]
 
