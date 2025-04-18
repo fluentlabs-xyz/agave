@@ -234,11 +234,11 @@ bitflags = { version = "2.6.0" }
 blake3 = { version = "1.5.4", default-features = false }
 spin = { version = "0.9.8", default-features = false }
 #borsh = { version = "1.5.1", features = ["derive", "unstable__schema"] }
-#borsh = { git = "https://github.com/fluentlabs-xyz/borsh-rs", package = "borsh", branch = "feat/svm-borsh-v1.5.1", default-features = false, features = ["derive", "unstable__schema"] }
-borsh = { path = "../borsh-rs-v1.5.1/borsh", default-features = false, features = ["derive", "unstable__schema"] }
+borsh = { git = "https://github.com/fluentlabs-xyz/borsh-rs", package = "borsh", branch = "feat/svm-borsh-v1.5.1", default-features = false, features = ["derive", "unstable__schema"] }
+#borsh = { path = "../borsh-rs-v1.5.1/borsh", default-features = false, features = ["derive", "unstable__schema"] }
 #borsh0-10 = { package = "borsh", version = "0.10.3" }
-#borsh0-10 = { git = "https://github.com/fluentlabs-xyz/borsh-rs", package = "borsh", branch = "feat/svm-v0.10.3", default-features = false }
-borsh0-10 = { path = "../borsh-rs-v0.10.3/borsh", package = "borsh", default-features = false }
+borsh0-10 = { git = "https://github.com/fluentlabs-xyz/borsh-rs", package = "borsh", branch = "feat/svm-v0.10.3", default-features = false }
+#borsh0-10 = { path = "../borsh-rs-v0.10.3/borsh", package = "borsh", default-features = false }
 hashbrown = { version = "0.15.1", default-features = false, features = [
     "alloc",
     "inline-more",
