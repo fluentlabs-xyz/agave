@@ -16,7 +16,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 solana-hash = { workspace = true }
 
 [target.'cfg(not(target_os = "solana"))'.dependencies]
-sha2 = { workspace = true }
+sha2 = { workspace = true, default-features = false }
 
 [target.'cfg(target_os = "solana")'.dependencies]
 # sha2 should be removed in the next breaking release,
