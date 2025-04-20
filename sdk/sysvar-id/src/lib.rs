@@ -1,3 +1,5 @@
+#![cfg_attr(not(feature = "std"), no_std)]
+
 //! Access to special accounts with dynamically-updated data.
 //!
 //! Sysvars are special accounts that contain dynamically-updated data about the

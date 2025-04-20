@@ -1,3 +1,5 @@
+#![cfg_attr(not(feature = "std"), no_std)]
+
 //! The Rust-based BPF program entrypoint supported by the latest BPF loader.
 //!
 //! For more information see the [`bpf_loader`] module.
@@ -9,14 +11,14 @@ use {
     alloc::vec::Vec,
     solana_account_info::AccountInfo,
     solana_pubkey::Pubkey,
-    std::{
-        alloc::Layout,
-        cell::RefCell,
-        mem::{size_of, MaybeUninit},
-        ptr::null_mut,
-        rc::Rc,
-        slice::{from_raw_parts, from_raw_parts_mut},
-    },
+    core::ptr::null_mut,
+    core::mem::size_of,
+    core::mem::MaybeUninit,
+    core::cell::RefCell,
+    core::alloc::Layout,
+    alloc::rc::Rc,
+    core::slice::from_raw_parts,
+    core::slice::from_raw_parts_mut,
 };
 // need to re-export msg for custom_heap_default macro
 pub use {
@@ -29,7 +31,7 @@ pub use {
 /// program_id: Program ID of the currently executing program accounts: Accounts
 /// passed as part of the instruction instruction_data: Instruction data
 pub type ProcessInstruction =
-    fn(program_id: &Pubkey, accounts: &[AccountInfo], instruction_data: &[u8]) -> ProgramResult;
+fn(program_id: &Pubkey, accounts: &[AccountInfo], instruction_data: &[u8]) -> ProgramResult;
 
 /// Programs indicate success with a return value of 0
 pub const SUCCESS: u64 = 0;
@@ -159,7 +161,7 @@ macro_rules! entrypoint_no_alloc {
         /// # Safety
         #[no_mangle]
         pub unsafe extern "C" fn entrypoint(input: *mut u8) -> u64 {
-            use std::mem::MaybeUninit;
+            use core::mem::MaybeUninit;
             // Clippy complains about this because a `const` with interior
             // mutability `RefCell` should use `static` instead to make it
             // clear that it can change.
@@ -288,7 +290,7 @@ pub struct BumpAllocator {
 /// operating on the prescribed `HEAP_START_ADDRESS` and `HEAP_LENGTH`. Any
 /// other use may overflow and is thus unsupported and at one's own risk.
 #[allow(clippy::arithmetic_side_effects)]
-unsafe impl std::alloc::GlobalAlloc for BumpAllocator {
+unsafe impl core::alloc::GlobalAlloc for BumpAllocator {
     #[inline]
     unsafe fn alloc(&self, layout: Layout) -> *mut u8 {
         let pos_ptr = self.start as *mut usize;
@@ -507,7 +509,7 @@ pub unsafe fn deserialize_into<'a>(
 
 #[cfg(test)]
 mod test {
-    use {super::*, std::alloc::GlobalAlloc};
+    use {super::*, core::alloc::GlobalAlloc};
 
     #[test]
     fn test_bump_allocator() {

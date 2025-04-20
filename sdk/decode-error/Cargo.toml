@@ -14,3 +14,6 @@ num-traits = { workspace = true }
 
 [dev-dependencies]
 num-derive = { workspace = true }
+
+[features]
+std = []

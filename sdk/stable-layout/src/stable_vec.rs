@@ -1,6 +1,7 @@
 //! `Vec`, with a stable memory layout
 
 use core::{marker::PhantomData, mem::ManuallyDrop, ptr::NonNull};
+use alloc::vec::Vec;
 
 /// `Vec`, with a stable memory layout
 ///
@@ -82,7 +83,7 @@ impl<T> core::ops::DerefMut for StableVec<T> {
     }
 }
 
-impl<T: core::fmt::Debug> std::fmt::Debug for StableVec<T> {
+impl<T: core::fmt::Debug> core::fmt::Debug for StableVec<T> {
     fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         core::fmt::Debug::fmt(&**self, f)
     }

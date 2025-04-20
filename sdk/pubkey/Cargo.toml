@@ -40,9 +40,9 @@ curve25519-dalek = { workspace = true }
 solana-sha256-hasher = { workspace = true }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
-getrandom = { workspace = true, features = ["js", "wasm-bindgen"] }
-js-sys = { workspace = true }
-wasm-bindgen = { workspace = true }
+#getrandom = { workspace = true, features = ["js", "wasm-bindgen"] }
+#js-sys = { workspace = true, default-features = false }
+#wasm-bindgen = { workspace = true }
 
 [dev-dependencies]
 anyhow = { workspace = true }

@@ -19,11 +19,13 @@ solana-frozen-abi = { workspace = true, optional = true, features = [
 solana-frozen-abi-macro = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
-solana-hash = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-sha256-hasher = { workspace = true }
+solana-hash = { workspace = true, default-features = false }
+solana-pubkey = { workspace = true, default-features = false }
+solana-sha256-hasher = { workspace = true, default-features = false }
+hashbrown = { workspace = true, default-features = false }
 
 [features]
+std = []
 frozen-abi = [
     "dep:solana-frozen-abi",
     "dep:solana-frozen-abi-macro",

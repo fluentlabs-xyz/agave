@@ -1,3 +1,5 @@
+#![cfg_attr(not(feature = "std"), no_std)]
+
 //! Basic low-level memory operations.
 //!
 //! Within the SBF environment, these are implemented as syscalls and executed by

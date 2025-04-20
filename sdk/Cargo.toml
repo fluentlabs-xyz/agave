@@ -127,7 +127,7 @@ thiserror = { workspace = true }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 getrandom = { version = "0.1", features = ["wasm-bindgen"] }
-js-sys = { workspace = true }
+js-sys = { workspace = true, default-features = false }
 wasm-bindgen = { workspace = true }
 
 [dev-dependencies]

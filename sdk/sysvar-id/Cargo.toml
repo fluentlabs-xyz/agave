@@ -19,3 +19,6 @@ rustdoc-args = ["--cfg=docsrs"]
 
 [lints]
 workspace = true
+
+[features]
+std = []

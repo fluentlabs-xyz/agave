@@ -1,3 +1,5 @@
+#![cfg_attr(not(feature = "std"), no_std)]
+
 //! Collection of all runtime features.
 //!
 //! Steps to add a new feature are outlined below. Note that these steps only cover
@@ -19,6 +21,8 @@
 //! For more information on how features are picked up, see comments for `Feature`.
 #![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 
+extern crate alloc;
+
 use {
     lazy_static::lazy_static,
     solana_clock::{Epoch, Slot},
@@ -26,7 +30,8 @@ use {
     solana_hash::Hash,
     solana_pubkey::Pubkey,
     solana_sha256_hasher::Hasher,
-    std::collections::{HashMap, HashSet},
+    hashbrown::{HashMap, HashSet},
+    alloc::vec::Vec,
 };
 
 pub mod deprecate_rewards_sysvar {

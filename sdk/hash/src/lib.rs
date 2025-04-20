@@ -11,11 +11,12 @@ extern crate std;
 use bytemuck_derive::{Pod, Zeroable};
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
-#[cfg(target_arch = "wasm32")]
+// #[cfg(target_arch = "wasm32")]
+#[cfg(not(feature = "std"))]
 use {
     alloc::{boxed::Box, format, string::String, string::ToString, vec},
-    js_sys::{Array, Uint8Array},
-    wasm_bindgen::{prelude::*, JsCast},
+    // js_sys::{Array, Uint8Array},
+    // wasm_bindgen::{prelude::*, JsCast},
 };
 use {
     core::{
@@ -38,7 +39,7 @@ pub const MAX_BASE58_LEN: usize = 44;
 ///
 /// [SHA-256]: https://en.wikipedia.org/wiki/SHA-2
 /// [blake3]: https://github.com/BLAKE3-team/BLAKE3
-#[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
+// #[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
 #[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
 #[cfg_attr(
     feature = "borsh",
@@ -47,7 +48,7 @@ pub const MAX_BASE58_LEN: usize = 44;
 )]
 #[cfg_attr(all(feature = "borsh", feature = "std"), derive(BorshSchema))]
 #[cfg_attr(feature = "bytemuck", derive(Pod, Zeroable))]
-#[cfg_attr(feature = "serde", derive(Serialize, Deserialize,))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize, ))]
 #[derive(Clone, Copy, Default, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[repr(transparent)]
 pub struct Hash(pub(crate) [u8; HASH_BYTES]);
@@ -150,58 +151,58 @@ impl Hash {
     }
 }
 
-#[cfg(target_arch = "wasm32")]
-#[allow(non_snake_case)]
-#[wasm_bindgen]
-impl Hash {
-    /// Create a new Hash object
-    ///
-    /// * `value` - optional hash as a base58 encoded string, `Uint8Array`, `[number]`
-    #[wasm_bindgen(constructor)]
-    pub fn constructor(value: JsValue) -> Result<Hash, JsValue> {
-        if let Some(base58_str) = value.as_string() {
-            base58_str
-                .parse::<Hash>()
-                .map_err(|x| JsValue::from(x.to_string()))
-        } else if let Some(uint8_array) = value.dyn_ref::<Uint8Array>() {
-            Ok(Hash::new(&uint8_array.to_vec()))
-        } else if let Some(array) = value.dyn_ref::<Array>() {
-            let mut bytes = vec![];
-            let iterator = js_sys::try_iter(&array.values())?.expect("array to be iterable");
-            for x in iterator {
-                let x = x?;
-
-                if let Some(n) = x.as_f64() {
-                    if n >= 0. && n <= 255. {
-                        bytes.push(n as u8);
-                        continue;
-                    }
-                }
-                return Err(format!("Invalid array argument: {:?}", x).into());
-            }
-            Ok(Hash::new(&bytes))
-        } else if value.is_undefined() {
-            Ok(Hash::default())
-        } else {
-            Err("Unsupported argument".into())
-        }
-    }
-
-    /// Return the base58 string representation of the hash
-    pub fn toString(&self) -> String {
-        self.to_string()
-    }
-
-    /// Checks if two `Hash`s are equal
-    pub fn equals(&self, other: &Hash) -> bool {
-        self == other
-    }
-
-    /// Return the `Uint8Array` representation of the hash
-    pub fn toBytes(&self) -> Box<[u8]> {
-        self.0.clone().into()
-    }
-}
+// #[cfg(target_arch = "wasm32")]
+// #[allow(non_snake_case)]
+// #[wasm_bindgen]
+// impl Hash {
+//     /// Create a new Hash object
+//     ///
+//     /// * `value` - optional hash as a base58 encoded string, `Uint8Array`, `[number]`
+//     #[wasm_bindgen(constructor)]
+//     pub fn constructor(value: JsValue) -> Result<Hash, JsValue> {
+//         if let Some(base58_str) = value.as_string() {
+//             base58_str
+//                 .parse::<Hash>()
+//                 .map_err(|x| JsValue::from(x.to_string()))
+//         } else if let Some(uint8_array) = value.dyn_ref::<Uint8Array>() {
+//             Ok(Hash::new(&uint8_array.to_vec()))
+//         } else if let Some(array) = value.dyn_ref::<Array>() {
+//             let mut bytes = vec![];
+//             let iterator = js_sys::try_iter(&array.values())?.expect("array to be iterable");
+//             for x in iterator {
+//                 let x = x?;
+//
+//                 if let Some(n) = x.as_f64() {
+//                     if n >= 0. && n <= 255. {
+//                         bytes.push(n as u8);
+//                         continue;
+//                     }
+//                 }
+//                 return Err(format!("Invalid array argument: {:?}", x).into());
+//             }
+//             Ok(Hash::new(&bytes))
+//         } else if value.is_undefined() {
+//             Ok(Hash::default())
+//         } else {
+//             Err("Unsupported argument".into())
+//         }
+//     }
+//
+//     /// Return the base58 string representation of the hash
+//     pub fn toString(&self) -> String {
+//         self.to_string()
+//     }
+//
+//     /// Checks if two `Hash`s are equal
+//     pub fn equals(&self, other: &Hash) -> bool {
+//         self == other
+//     }
+//
+//     /// Return the `Uint8Array` representation of the hash
+//     pub fn toBytes(&self) -> Box<[u8]> {
+//         self.0.clone().into()
+//     }
+// }
 
 #[cfg(test)]
 mod tests {

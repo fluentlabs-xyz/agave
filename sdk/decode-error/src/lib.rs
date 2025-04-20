@@ -1,3 +1,5 @@
+#![cfg_attr(not(feature = "std"), no_std)]
+
 //! Converting custom error codes to enums.
 
 use num_traits::FromPrimitive;

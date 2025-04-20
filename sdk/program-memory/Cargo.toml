@@ -20,3 +20,6 @@ solana-define-syscall = { workspace = true }
 
 [lints]
 workspace = true
+
+[features]
+std = []

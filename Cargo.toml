@@ -325,7 +325,7 @@ itertools = "0.12.1"
 jemallocator = { package = "tikv-jemallocator", version = "0.4.1", features = [
     "unprefixed_malloc_on_supported_platforms",
 ] }
-js-sys = "0.3.72"
+js-sys = { version = "0.3.72", workspace = true }
 json5 = "0.4.1"
 jsonrpc-core = "18.0.0"
 jsonrpc-core-client = "18.0.0"
@@ -359,7 +359,7 @@ num-traits = { version = "0.2", default-features = false, features = ["i128"] }
 num_cpus = "1.16.0"
 num_enum = "0.7.3"
 openssl = "0.10"
-parking_lot = "0.12"
+parking_lot = { version = "0.12", default-features = false }
 pbkdf2 = { version = "0.11.0", default-features = false }
 pem = "1.1.1"
 percentage = "0.1.0"
@@ -413,7 +413,7 @@ solana-account-decoder-client-types = { path = "account-decoder-client-types", v
 solana-account-info = { path = "sdk/account-info", version = "=2.1.18", default-features = false }
 solana-accounts-db = { path = "accounts-db", version = "=2.1.18" }
 solana-address-lookup-table-program = { path = "programs/address-lookup-table", version = "=2.1.18" }
-solana-atomic-u64 = { path = "sdk/atomic-u64", version = "=2.1.18" }
+solana-atomic-u64 = { path = "sdk/atomic-u64", version = "=2.1.18", default-features = false }
 solana-banks-client = { path = "banks-client", version = "=2.1.18" }
 solana-banks-interface = { path = "banks-interface", version = "=2.1.18" }
 solana-banks-server = { path = "banks-server", version = "=2.1.18" }
@@ -593,7 +593,7 @@ tungstenite = "0.20.1"
 uriparse = "0.6.4"
 url = "2.5.2"
 vec_extract_if_polyfill = "0.1.0"
-wasm-bindgen = "0.2"
+wasm-bindgen = { version = "0.2", default-features = false }
 winapi = "0.3.8"
 winreg = "0.50"
 x509-parser = "0.14.0"

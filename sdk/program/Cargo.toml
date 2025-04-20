@@ -103,11 +103,11 @@ solana-logger = { workspace = true }
 console_error_panic_hook = { workspace = true }
 console_log = { workspace = true }
 getrandom = { workspace = true, features = ["js", "wasm-bindgen"] }
-js-sys = { workspace = true }
+js-sys = { workspace = true, default-features = false }
 wasm-bindgen = { workspace = true }
 
 [target.'cfg(not(target_pointer_width = "64"))'.dependencies]
-parking_lot = { workspace = true }
+parking_lot = { workspace = true, default-features = false }
 
 [dev-dependencies]
 anyhow = { workspace = true }
