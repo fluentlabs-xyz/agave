@@ -1,6 +1,10 @@
 //! Compact serde-encoding of vectors with small length.
 #![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 #![allow(clippy::arithmetic_side_effects)]
+#![cfg_attr(not(feature = "std"), no_std)]
+extern crate alloc;
+
+use alloc::vec::Vec;
 #[cfg(feature = "frozen-abi")]
 use solana_frozen_abi_macro::AbiExample;
 use {
@@ -269,6 +273,7 @@ pub fn decode_shortu16_len(bytes: &[u8]) -> Result<(usize, usize), ()> {
 
 #[cfg(test)]
 mod tests {
+    use alloc::vec;
     use {
         super::*,
         assert_matches::assert_matches,

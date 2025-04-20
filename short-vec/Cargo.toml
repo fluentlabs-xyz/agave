@@ -24,6 +24,7 @@ bincode = { workspace = true }
 serde_json = { workspace = true }
 
 [features]
+std = []
 frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro"]
 
 [package.metadata.docs.rs]

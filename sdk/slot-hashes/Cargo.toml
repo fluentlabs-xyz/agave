@@ -19,6 +19,7 @@ solana-sysvar-id = { workspace = true, default-features = false, optional = true
 solana-sha256-hasher = { workspace = true }
 
 [features]
+std = []
 serde = ["dep:serde", "dep:serde_derive", "solana-hash/serde"]
 sysvar = ["dep:solana-sysvar-id"]
 

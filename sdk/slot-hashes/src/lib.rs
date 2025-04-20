@@ -6,16 +6,20 @@
 //!
 //! [`solana_program::sysvar::slot_hashes`]: https://docs.rs/solana-program/latest/solana_program/sysvar/slot_hashes/index.html
 
+#![cfg_attr(not(feature = "std"), no_std)]
+extern crate alloc;
+
 #[cfg(feature = "sysvar")]
 pub mod sysvar;
 
 use {
     solana_hash::Hash,
-    std::{
+    core::{
         iter::FromIterator,
         ops::Deref,
         sync::atomic::{AtomicUsize, Ordering},
     },
+    alloc::vec::Vec,
 };
 
 pub const MAX_ENTRIES: usize = 512; // about 2.5 minutes to get your vote in
@@ -70,7 +74,7 @@ impl SlotHashes {
 }
 
 impl FromIterator<(u64, Hash)> for SlotHashes {
-    fn from_iter<I: IntoIterator<Item = (u64, Hash)>>(iter: I) -> Self {
+    fn from_iter<I: IntoIterator<Item=(u64, Hash)>>(iter: I) -> Self {
         Self(iter.into_iter().collect())
     }
 }
