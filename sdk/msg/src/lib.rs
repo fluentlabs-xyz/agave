@@ -1,3 +1,4 @@
+#![feature(error_in_core)]
 #![cfg_attr(not(feature = "std"), no_std)]
 
 /// Print a message to the log.
