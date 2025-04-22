@@ -502,7 +502,7 @@ solana-rent = { path = "sdk/rent", version = "=2.1.18", default-features = false
 solana-sanitize = { path = "sdk/sanitize", version = "=2.1.18" }
 solana-secp256r1-program = { path = "sdk/secp256r1-program", version = "=2.1.18", default-features = false }
 solana-serde-varint = { path = "sdk/serde-varint", version = "=2.1.18" }
-solana-serialize-utils = { path = "sdk/serialize-utils", version = "=2.1.18" }
+solana-serialize-utils = { path = "sdk/serialize-utils", version = "=2.1.18", default-features = false }
 solana-sha256-hasher = { path = "sdk/sha256-hasher", version = "=2.1.18" }
 solana-signature = { path = "sdk/signature", version = "=2.1.18", default-features = false }
 solana-slot-hashes = { path = "sdk/slot-hashes", version = "=2.1.18", default-features = false }

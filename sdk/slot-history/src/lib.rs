@@ -6,6 +6,7 @@
 //!
 //! [`sysvar::slot_history`]: https://docs.rs/solana-program/latest/solana_program/sysvar/slot_history
 
+#![cfg_attr(not(feature = "std"), no_std)]
 #![allow(clippy::arithmetic_side_effects)]
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 
@@ -34,8 +35,8 @@ impl Default for SlotHistory {
     }
 }
 
-impl std::fmt::Debug for SlotHistory {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl core::fmt::Debug for SlotHistory {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         write!(f, "SlotHistory {{ slot: {} bits:", self.next_slot)?;
         for i in 0..MAX_ENTRIES {
             if self.bits.get(i) {

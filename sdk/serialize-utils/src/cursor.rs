@@ -1,10 +1,10 @@
 use {
-    solana_instruction::error::InstructionError,
-    solana_pubkey::{Pubkey, PUBKEY_BYTES},
-    std::{
+    core::{
         io::{BufRead as _, Cursor, Read},
         ptr,
     },
+    solana_instruction::error::InstructionError,
+    solana_pubkey::{Pubkey, PUBKEY_BYTES},
 };
 
 pub fn read_u8<T: AsRef<[u8]>>(cursor: &mut Cursor<T>) -> Result<u8, InstructionError> {

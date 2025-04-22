@@ -1,3 +1,4 @@
+#![cfg_attr(not(feature = "std"), no_std)]
 #![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 #[cfg(feature = "serde")]
@@ -6,8 +7,9 @@ use serde_derive::{Deserialize, Serialize};
 use solana_frozen_abi_macro::{AbiEnumVisitor, AbiExample};
 use {
     core::fmt,
-    solana_instruction::error::InstructionError, solana_sanitize::SanitizeError,
-    std::io,
+    solana_instruction::error::InstructionError,
+    solana_sanitize::SanitizeError,
+    // std::io,
 };
 
 /// Reasons a transaction might be rejected.
@@ -353,62 +355,62 @@ impl From<SanitizeError> for SanitizeMessageError {
     }
 }
 
-#[cfg(not(target_os = "solana"))]
-#[derive(Debug)]
-pub enum TransportError {
-    IoError(io::Error),
-    TransactionError(TransactionError),
-    Custom(String),
-}
-
-#[cfg(not(target_os = "solana"))]
-impl core::error::Error for TransportError {
-    fn source(&self) -> Option<&(dyn core::error::Error + 'static)> {
-        match self {
-            TransportError::IoError(e) => Some(e),
-            TransportError::TransactionError(e) => Some(e),
-            TransportError::Custom(_) => None,
-        }
-    }
-}
-
-#[cfg(not(target_os = "solana"))]
-impl fmt::Display for TransportError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> ::core::fmt::Result {
-        match self {
-            Self::IoError(e) => f.write_fmt(format_args!("transport io error: {e}")),
-            Self::TransactionError(e) => {
-                f.write_fmt(format_args!("transport transaction error: {e}"))
-            }
-            Self::Custom(s) => f.write_fmt(format_args!("transport custom error: {s}")),
-        }
-    }
-}
-
-#[cfg(not(target_os = "solana"))]
-impl From<io::Error> for TransportError {
-    fn from(e: io::Error) -> Self {
-        TransportError::IoError(e)
-    }
-}
-
-#[cfg(not(target_os = "solana"))]
-impl From<TransactionError> for TransportError {
-    fn from(e: TransactionError) -> Self {
-        TransportError::TransactionError(e)
-    }
-}
-
-#[cfg(not(target_os = "solana"))]
-impl TransportError {
-    pub fn unwrap(&self) -> TransactionError {
-        if let TransportError::TransactionError(err) = self {
-            err.clone()
-        } else {
-            panic!("unexpected transport error")
-        }
-    }
-}
-
-#[cfg(not(target_os = "solana"))]
-pub type TransportResult<T> = core::result::Result<T, TransportError>;
+// #[cfg(not(target_os = "solana"))]
+// #[derive(Debug)]
+// pub enum TransportError {
+//     IoError(io::Error),
+//     TransactionError(TransactionError),
+//     Custom(String),
+// }
+//
+// #[cfg(not(target_os = "solana"))]
+// impl core::error::Error for TransportError {
+//     fn source(&self) -> Option<&(dyn core::error::Error + 'static)> {
+//         match self {
+//             TransportError::IoError(e) => Some(e),
+//             TransportError::TransactionError(e) => Some(e),
+//             TransportError::Custom(_) => None,
+//         }
+//     }
+// }
+//
+// #[cfg(not(target_os = "solana"))]
+// impl fmt::Display for TransportError {
+//     fn fmt(&self, f: &mut fmt::Formatter) -> ::core::fmt::Result {
+//         match self {
+//             Self::IoError(e) => f.write_fmt(format_args!("transport io error: {e}")),
+//             Self::TransactionError(e) => {
+//                 f.write_fmt(format_args!("transport transaction error: {e}"))
+//             }
+//             Self::Custom(s) => f.write_fmt(format_args!("transport custom error: {s}")),
+//         }
+//     }
+// }
+//
+// #[cfg(not(target_os = "solana"))]
+// impl From<io::Error> for TransportError {
+//     fn from(e: io::Error) -> Self {
+//         TransportError::IoError(e)
+//     }
+// }
+//
+// #[cfg(not(target_os = "solana"))]
+// impl From<TransactionError> for TransportError {
+//     fn from(e: TransactionError) -> Self {
+//         TransportError::TransactionError(e)
+//     }
+// }
+//
+// #[cfg(not(target_os = "solana"))]
+// impl TransportError {
+//     pub fn unwrap(&self) -> TransactionError {
+//         if let TransportError::TransactionError(err) = self {
+//             err.clone()
+//         } else {
+//             panic!("unexpected transport error")
+//         }
+//     }
+// }
+//
+// #[cfg(not(target_os = "solana"))]
+// pub type TransportResult<T> = core::result::Result<T, TransportError>;

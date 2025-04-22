@@ -16,6 +16,7 @@ solana-sdk-macro = { workspace = true, default-features = false }
 solana-sysvar-id = { workspace = true, optional = true }
 
 [features]
+std = []
 serde = ["dep:serde", "dep:serde_derive"]
 sysvar = ["dep:solana-sysvar-id"]
 
