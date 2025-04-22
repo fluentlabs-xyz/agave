@@ -1,4 +1,5 @@
 #![no_std]
+#![feature(error_in_core)]
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 #![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 #[cfg(feature = "borsh")]
@@ -48,7 +49,7 @@ pub const MAX_BASE58_LEN: usize = 44;
 )]
 #[cfg_attr(all(feature = "borsh", feature = "std"), derive(BorshSchema))]
 #[cfg_attr(feature = "bytemuck", derive(Pod, Zeroable))]
-#[cfg_attr(feature = "serde", derive(Serialize, Deserialize, ))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize,))]
 #[derive(Clone, Copy, Default, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[repr(transparent)]
 pub struct Hash(pub(crate) [u8; HASH_BYTES]);

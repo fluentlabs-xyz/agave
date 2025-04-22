@@ -2,6 +2,7 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 #![allow(clippy::arithmetic_side_effects)]
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
+#![feature(error_in_core)]
 
 use alloc::format;
 #[cfg(feature = "borsh")]
@@ -9,6 +10,7 @@ use borsh::io::Error as BorshIoError;
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
 extern crate alloc;
+use alloc::string::{String, ToString};
 use {
     core::convert::TryFrom,
     core::fmt,
@@ -28,7 +30,6 @@ use {
     solana_msg::msg,
     solana_pubkey::PubkeyError,
 };
-use alloc::string::{String, ToString};
 
 pub type ProgramResult = core::result::Result<(), ProgramError>;
 

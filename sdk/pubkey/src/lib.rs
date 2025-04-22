@@ -1,5 +1,6 @@
 //! Solana account addresses.
 #![no_std]
+#![feature(error_in_core)]
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 #![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 #![allow(clippy::arithmetic_side_effects)]
@@ -1195,7 +1196,7 @@ mod tests {
              ",
             &Pubkey::new_unique()
         )
-            .is_ok());
+        .is_ok());
         // utf-8 abuse ;)
         assert_eq!(
             Pubkey::create_with_seed(
@@ -1213,10 +1214,10 @@ mod tests {
             from_utf8(&[0; MAX_SEED_LEN]).unwrap(),
             &Pubkey::new_unique(),
         )
-            .is_ok());
+        .is_ok());
 
         assert!(
-            Pubkey::create_with_seed(&Pubkey::new_unique(), "", &Pubkey::new_unique(), ).is_ok()
+            Pubkey::create_with_seed(&Pubkey::new_unique(), "", &Pubkey::new_unique(),).is_ok()
         );
 
         assert_eq!(

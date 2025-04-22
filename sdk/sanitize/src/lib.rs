@@ -1,9 +1,10 @@
 #![cfg_attr(not(feature = "std"), no_std)]
+#![feature(error_in_core)]
 //! A trait for sanitizing values and members of over the wire messages.
 extern crate alloc;
 
-use {core::error::Error, core::fmt};
 use alloc::vec::Vec;
+use {core::error::Error, core::fmt};
 
 #[derive(PartialEq, Debug, Eq, Clone)]
 pub enum SanitizeError {
