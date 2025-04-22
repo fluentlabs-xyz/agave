@@ -244,8 +244,8 @@ hashbrown = { version = "0.15.1", default-features = false, features = [
     "inline-more",
     #    "default-hasher",
 ] }
-#subtle = { git = "https://github.com/fluentlabs-xyz/subtle", branch = "feat/svm-2.4.1", default-features = false }
-subtle = { path = "../subtle", default-features = false }
+subtle = { git = "https://github.com/fluentlabs-xyz/subtle", branch = "feat/svm-2.4.1", default-features = false }
+#subtle = { path = "../subtle", default-features = false }
 #subtle = "2.6.1"
 bs58 = { version = "0.5.1", default-features = false }
 #bv = { version = "0.11.1", default-features = false }
@@ -554,8 +554,8 @@ solana-zk-sdk = { path = "zk-sdk", version = "=2.1.18" }
 solana-zk-token-proof-program = { path = "programs/zk-token-proof", version = "=2.1.18" }
 solana-zk-token-sdk = { path = "zk-token-sdk", version = "=2.1.18" }
 #solana_rbpf = "=0.8.5"
-#solana_rbpf = { git = "https://github.com/fluentlabs-xyz/rbpf", branch = "feat/svm", default-features = false }
-solana_rbpf = { path = "../rbpf", default-features = false }
+solana_rbpf = { git = "https://github.com/fluentlabs-xyz/rbpf", branch = "feat/svm", default-features = false }
+#solana_rbpf = { path = "../rbpf", default-features = false }
 spl-associated-token-account = "=4.0.0"
 spl-instruction-padding = "0.2"
 spl-memo = "=5.0.0"

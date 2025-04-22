@@ -9104,6 +9104,7 @@ dependencies = [
 [[package]]
 name = "solana_rbpf"
 version = "0.8.5"
+source = "git+https://github.com/fluentlabs-xyz/rbpf?branch=feat/svm#1a02f27a4a67f6c3009dafd575fe8d0bf7f5a5c3"
 dependencies = [
  "byteorder",
  "combine 3.8.1",
@@ -9414,6 +9415,7 @@ dependencies = [
 [[package]]
 name = "subtle"
 version = "2.4.1"
+source = "git+https://github.com/fluentlabs-xyz/subtle?branch=feat/svm-2.4.1#1c5526d6c5725b75a14de599899a386fcad7ebb6"
 
 [[package]]
 name = "subtle"
