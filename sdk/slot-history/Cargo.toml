@@ -14,6 +14,7 @@ bv = { workspace = true, default-features = false }
 serde = { workspace = true, default-features = false, features = [], optional = true }
 serde_derive = { workspace = true, default-features = false, optional = true }
 solana-sysvar-id = { workspace = true, default-features = false, optional = true }
+bincode = { workspace = true }
 
 [features]
 std = []

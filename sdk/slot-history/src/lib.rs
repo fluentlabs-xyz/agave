@@ -21,7 +21,7 @@ use bv::{BitVec, BitsMut};
     feature = "serde",
     derive(serde_derive::Deserialize, serde_derive::Serialize)
 )]
-#[derive(Clone, PartialEq, Eq)]
+#[derive(Clone, PartialEq, Eq, bincode::Encode, bincode::Decode)]
 pub struct SlotHistory {
     pub bits: BitVec<u64>,
     pub next_slot: u64,

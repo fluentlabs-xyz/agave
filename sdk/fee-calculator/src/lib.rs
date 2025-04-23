@@ -13,7 +13,7 @@ extern crate std;
     feature = "serde",
     derive(serde_derive::Serialize, serde_derive::Deserialize)
 )]
-#[derive(Default, PartialEq, Eq, Clone, Copy, Debug)]
+#[derive(Default, PartialEq, Eq, Clone, Copy, Debug, bincode::Encode, bincode::Decode)]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
 pub struct FeeCalculator {
     /// The current cost of a signature.

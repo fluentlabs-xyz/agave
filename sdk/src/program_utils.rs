@@ -10,10 +10,8 @@ pub fn limited_deserialize<T>(instruction_data: &[u8]) -> Result<T, InstructionE
 where
     T: serde::de::DeserializeOwned,
 {
-    solana_program::program_utils::limited_deserialize(
-        instruction_data,
-        crate::packet::PACKET_DATA_SIZE as u64,
-    )
+    solana_program::program_utils::limited_deserialize(instruction_data)
+        .map_err(|_| InstructionError::InvalidInstructionData)
 }
 
 #[cfg(test)]

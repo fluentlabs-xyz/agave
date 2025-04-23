@@ -10,6 +10,7 @@ license = { workspace = true }
 edition = { workspace = true }
 
 [dependencies]
+bincode = { workspace = true }
 serde = { workspace = true, default-features = false, optional = true }
 serde_derive = { workspace = true, default-features = false, optional = true }
 solana-sdk-macro = { workspace = true, default-features = false }

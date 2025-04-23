@@ -12,7 +12,7 @@ use solana_sdk_macro::CloneZeroed;
     feature = "serde",
     derive(serde_derive::Deserialize, serde_derive::Serialize)
 )]
-#[derive(Debug, CloneZeroed, PartialEq, Eq, Default)]
+#[derive(Debug, CloneZeroed, PartialEq, Eq, Default, bincode::Encode, bincode::Decode)]
 pub struct LastRestartSlot {
     /// The last restart `Slot`.
     pub last_restart_slot: u64,

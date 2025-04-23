@@ -13,13 +13,13 @@ extern crate alloc;
 pub mod sysvar;
 
 use {
-    solana_hash::Hash,
+    alloc::vec::Vec,
     core::{
         iter::FromIterator,
         ops::Deref,
         sync::atomic::{AtomicUsize, Ordering},
     },
-    alloc::vec::Vec,
+    solana_hash::Hash,
 };
 
 pub const MAX_ENTRIES: usize = 512; // about 2.5 minutes to get your vote in
@@ -43,7 +43,7 @@ pub type SlotHash = (u64, Hash);
     feature = "serde",
     derive(serde_derive::Deserialize, serde_derive::Serialize)
 )]
-#[derive(PartialEq, Eq, Debug, Default)]
+#[derive(PartialEq, Eq, Debug, Default, bincode::Encode, bincode::Decode)]
 pub struct SlotHashes(Vec<SlotHash>);
 
 impl SlotHashes {
@@ -74,7 +74,7 @@ impl SlotHashes {
 }
 
 impl FromIterator<(u64, Hash)> for SlotHashes {
-    fn from_iter<I: IntoIterator<Item=(u64, Hash)>>(iter: I) -> Self {
+    fn from_iter<I: IntoIterator<Item = (u64, Hash)>>(iter: I) -> Self {
         Self(iter.into_iter().collect())
     }
 }

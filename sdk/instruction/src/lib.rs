@@ -25,6 +25,8 @@ use {alloc::vec::Vec, solana_pubkey::Pubkey};
 pub mod account_meta;
 // #[cfg(feature = "std")]
 pub use account_meta::AccountMeta;
+use solana_bincode::bincode_serialize;
+
 pub mod error;
 #[cfg(target_os = "solana")]
 pub mod syscalls;
@@ -221,12 +223,12 @@ impl Instruction {
     ///    )
     /// }
     /// ```
-    pub fn new_with_bincode<T: serde::Serialize>(
+    pub fn new_with_bincode<T: bincode::enc::Encode>(
         program_id: Pubkey,
         data: &T,
         accounts: Vec<AccountMeta>,
     ) -> Self {
-        let data = bincode::serialize(data).unwrap();
+        let data = bincode_serialize(data).unwrap();
         Self {
             program_id,
             accounts,

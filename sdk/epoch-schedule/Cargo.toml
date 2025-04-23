@@ -16,6 +16,7 @@ solana-frozen-abi = { workspace = true, optional = true }
 solana-frozen-abi-macro = { workspace = true, optional = true }
 solana-sdk-macro = { workspace = true }
 solana-sysvar-id = { workspace = true, optional = true }
+bincode = { workspace = true }
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]

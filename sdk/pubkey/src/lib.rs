@@ -165,7 +165,9 @@ impl From<u64> for PubkeyError {
 #[cfg_attr(all(feature = "borsh"), derive(BorshSchema))]
 #[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
 #[cfg_attr(feature = "bytemuck", derive(Pod, Zeroable))]
-#[derive(Clone, Copy, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[derive(
+    Clone, Copy, Default, Eq, Hash, Ord, PartialEq, PartialOrd, bincode::Encode, bincode::Decode,
+)]
 // #[cfg_attr(feature = "dev-context-only-utils", derive(Arbitrary))]
 pub struct Pubkey(pub(crate) [u8; 32]);
 

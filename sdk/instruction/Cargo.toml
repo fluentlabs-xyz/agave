@@ -18,6 +18,7 @@ serde_derive = { workspace = true, default-features = false, optional = true }
 solana-frozen-abi = { workspace = true, optional = true }
 solana-frozen-abi-macro = { workspace = true, optional = true }
 solana-pubkey = { workspace = true, default-features = false }
+solana-bincode = { workspace = true, default-features = false }
 
 [target.'cfg(target_os = "solana")'.dependencies]
 solana-define-syscall = { workspace = true }

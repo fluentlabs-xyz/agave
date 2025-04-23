@@ -180,7 +180,7 @@ pub type UnixTimestamp = i64;
 /// All members of `Clock` start from 0 upon network boot.
 #[repr(C)]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[derive(Debug, CloneZeroed, Default, PartialEq, Eq)]
+#[derive(Debug, CloneZeroed, Default, PartialEq, Eq, bincode::Encode, bincode::Decode)]
 pub struct Clock {
     /// The current `Slot`.
     pub slot: Slot,

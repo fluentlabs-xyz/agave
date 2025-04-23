@@ -1,3 +1,4 @@
+use solana_instruction::error::InstructionError;
 #[deprecated(
     since = "2.1.0",
     note = "Use solana_transaction_error::SanitizeMessageError instead"
@@ -335,7 +336,10 @@ impl SanitizedMessage {
             )
             .filter(|ix| {
                 matches!(
-                    limited_deserialize(&ix.data, 4 /* serialized size of AdvanceNonceAccount */),
+                    limited_deserialize::<4, _>(
+                        &ix.data /* serialized size of AdvanceNonceAccount */
+                    )
+                    .map_err(|_| InstructionError::InvalidInstructionData),
                     Ok(SystemInstruction::AdvanceNonceAccount)
                 )
             })

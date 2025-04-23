@@ -28,7 +28,7 @@ static_assertions::const_assert_eq!(
     feature = "serde",
     derive(serde_derive::Deserialize, serde_derive::Serialize)
 )]
-#[derive(PartialEq, CloneZeroed, Debug)]
+#[derive(PartialEq, CloneZeroed, Debug, bincode::Encode, bincode::Decode)]
 pub struct Rent {
     /// Rental rate in lamports/byte-year.
     pub lamports_per_byte_year: u64,

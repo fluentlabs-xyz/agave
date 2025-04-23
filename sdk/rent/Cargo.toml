@@ -16,6 +16,7 @@ solana-frozen-abi = { workspace = true, optional = true }
 solana-frozen-abi-macro = { workspace = true, optional = true }
 solana-sdk-macro = { workspace = true, default-features = false }
 solana-sysvar-id = { workspace = true, default-features = false, optional = true }
+bincode = { workspace = true }
 
 [dev-dependencies]
 solana-clock = { workspace = true }

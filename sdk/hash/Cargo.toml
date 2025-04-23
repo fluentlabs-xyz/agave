@@ -29,6 +29,7 @@ solana-frozen-abi-macro = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
 solana-sanitize = { workspace = true }
+bincode = { workspace = true }
 
 [dev-dependencies]
 solana-hash = { path = ".", features = ["dev-context-only-utils"] }
