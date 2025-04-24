@@ -7,7 +7,7 @@ extern crate alloc;
 use alloc::vec;
 use alloc::vec::Vec;
 use bincode::{
-    config::{Configuration, Fixint, LittleEndian, NoLimit},
+    config::{Configuration, Fixint, LittleEndian},
     enc, error,
 };
 
