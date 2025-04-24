@@ -13,9 +13,10 @@ use bytemuck_derive::{Pod, Zeroable};
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
 // #[cfg(target_arch = "wasm32")]
+use alloc::string::ToString;
 #[cfg(not(feature = "std"))]
 use {
-    alloc::{boxed::Box, format, string::String, string::ToString, vec},
+    alloc::{boxed::Box, format, string::String, vec},
     // js_sys::{Array, Uint8Array},
     // wasm_bindgen::{prelude::*, JsCast},
 };

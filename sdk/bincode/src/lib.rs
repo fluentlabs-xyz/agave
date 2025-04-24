@@ -7,12 +7,13 @@ extern crate alloc;
 use alloc::vec;
 use alloc::vec::Vec;
 use bincode::{
-    config::{Configuration, Fixint, LittleEndian},
+    config::{Configuration, Fixint, LittleEndian, NoLimit},
     enc, error,
 };
 
 lazy_static::lazy_static! {
     pub static ref BINCODE_CONFIG_DEFAULT: Configuration<LittleEndian, Fixint> = bincode::config::legacy();
+    // pub static ref BINCODE_CONFIG_DEFAULT: Configuration = bincode::config::standard();
 }
 
 pub fn bincode_serialize_into<T: enc::Encode>(
