@@ -274,15 +274,12 @@ pub fn decode_shortu16_len(bytes: &[u8]) -> Result<(usize, usize), ()> {
 #[cfg(test)]
 mod tests {
     use alloc::vec;
-    use {
-        super::*,
-        assert_matches::assert_matches,
-        bincode::{deserialize, serialize},
-    };
+    use solana_bincode::{deserialize, serialize};
+    use {super::*, assert_matches::assert_matches};
 
     /// Return the serialized length.
     fn encode_len(len: u16) -> Vec<u8> {
-        bincode::serialize(&ShortU16(len)).unwrap()
+        serialize(&ShortU16(len)).unwrap()
     }
 
     fn assert_len_encoding(len: u16, bytes: &[u8]) {

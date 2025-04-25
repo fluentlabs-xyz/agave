@@ -8250,6 +8250,7 @@ dependencies = [
  "bincode 2.0.1",
  "serde",
  "serde_json",
+ "solana-bincode",
  "solana-frozen-abi",
  "solana-frozen-abi-macro",
 ]
