@@ -6,6 +6,7 @@ extern crate alloc;
 
 use alloc::vec;
 use alloc::vec::Vec;
+use bincode::serde::Compat;
 use bincode::{
     config::{Configuration, Fixint, LittleEndian},
     enc, error,
@@ -16,14 +17,15 @@ lazy_static::lazy_static! {
     // pub static ref BINCODE_CONFIG_DEFAULT: Configuration = bincode::config::standard();
 }
 
-pub fn bincode_serialize_into<T: enc::Encode>(
+pub fn bincode_serialize_into<T: serde::Serialize>(
     entity: &T,
     dst: &mut [u8],
 ) -> Result<usize, error::EncodeError> {
+    let entity = Compat(entity);
     bincode::encode_into_slice(entity, dst, BINCODE_CONFIG_DEFAULT.clone())
 }
 
-pub fn bincode_serialize_original<T: enc::Encode>(
+pub fn bincode_serialize_original<T: serde::Serialize>(
     entity: &T,
 ) -> Result<(Vec<u8>, usize), error::EncodeError> {
     let mut buf = vec![];
@@ -31,30 +33,34 @@ pub fn bincode_serialize_original<T: enc::Encode>(
     Ok((buf, bytes_written))
 }
 
-pub fn bincode_serialize_config<T: enc::Encode, C: bincode::config::Config>(
+pub fn bincode_serialize_config<T: serde::Serialize, C: bincode::config::Config>(
     entity: &T,
     config: C,
 ) -> Result<Vec<u8>, error::EncodeError> {
+    let entity = Compat(entity);
     Ok(bincode::encode_to_vec(entity, config)?)
 }
 
-pub fn bincode_serialize<T: enc::Encode>(entity: &T) -> Result<Vec<u8>, error::EncodeError> {
+pub fn bincode_serialize<T: serde::Serialize>(entity: &T) -> Result<Vec<u8>, error::EncodeError> {
     bincode_serialize_config(entity, BINCODE_CONFIG_DEFAULT.clone())
 }
 
-pub fn bincode_serialized_size<T: enc::Encode>(entity: &T) -> Result<usize, error::EncodeError> {
+pub fn bincode_serialized_size<T: serde::Serialize>(
+    entity: &T,
+) -> Result<usize, error::EncodeError> {
     // TODO need more efficient way to extract serialized size
     Ok(bincode_serialize(entity)?.len())
 }
 
-pub fn bincode_deserialize_config<T: bincode::de::Decode<()>, C: bincode::config::Config>(
+pub fn bincode_deserialize_config<T: serde::de::DeserializeOwned, C: bincode::config::Config>(
     src: &[u8],
     config: C,
 ) -> Result<T, error::DecodeError> {
-    Ok(bincode::decode_from_slice(src, config)?.0)
+    let entity: Compat<T> = bincode::decode_from_slice(src, config)?.0;
+    Ok(entity.0)
 }
 
-pub fn bincode_deserialize<T: bincode::de::Decode<()>>(
+pub fn bincode_deserialize<T: serde::de::DeserializeOwned>(
     src: &[u8],
 ) -> Result<T, error::DecodeError> {
     Ok(bincode_deserialize_config(
@@ -69,14 +75,15 @@ pub fn limited_deserialize<const LIMIT: usize, T>(
     instruction_data: &[u8],
 ) -> Result<T, error::DecodeError>
 where
-    T: bincode::de::Decode<()>, // serde::de::DeserializeOwned,
+    T: serde::de::DeserializeOwned, // serde::de::DeserializeOwned,
 {
-    Ok(bincode_deserialize_config(
+    let result = bincode_deserialize_config(
         instruction_data,
         BINCODE_CONFIG_DEFAULT
             .with_limit::<LIMIT>()
             .with_fixed_int_encoding(),
-    )?)
+    )?;
+    Ok(result)
     // .allow_trailing_bytes() // to retain the behavior of bincode::deserialize with the new `options()` method
     // .deserialize_from(instruction_data)
     // .map_err(|_| InstructionError::InvalidInstructionData)

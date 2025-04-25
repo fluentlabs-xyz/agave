@@ -223,7 +223,7 @@ impl Instruction {
     ///    )
     /// }
     /// ```
-    pub fn new_with_bincode<T: bincode::enc::Encode>(
+    pub fn new_with_bincode<T: serde::Serialize>(
         program_id: Pubkey,
         data: &T,
         accounts: Vec<AccountMeta>,
