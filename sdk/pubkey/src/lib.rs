@@ -157,12 +157,12 @@ impl From<u64> for PubkeyError {
 // #[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
 #[repr(transparent)]
 #[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
-#[cfg_attr(
-    feature = "borsh",
-    derive(BorshSerialize, BorshDeserialize),
-    borsh(crate = "borsh")
-)]
-#[cfg_attr(all(feature = "borsh"), derive(BorshSchema))]
+// #[cfg_attr(
+//     feature = "borsh",
+//     derive(BorshSerialize, BorshDeserialize),
+//     borsh(crate = "borsh")
+// )]
+// #[cfg_attr(all(feature = "borsh"), derive(BorshSchema))]
 #[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
 #[cfg_attr(feature = "bytemuck", derive(Pod, Zeroable))]
 #[derive(

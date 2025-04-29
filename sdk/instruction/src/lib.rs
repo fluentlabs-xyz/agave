@@ -25,7 +25,6 @@ use {alloc::vec::Vec, solana_pubkey::Pubkey};
 pub mod account_meta;
 // #[cfg(feature = "std")]
 pub use account_meta::AccountMeta;
-use solana_bincode::serialize;
 
 pub mod error;
 #[cfg(target_os = "solana")]
@@ -228,7 +227,7 @@ impl Instruction {
         data: &T,
         accounts: Vec<AccountMeta>,
     ) -> Self {
-        let data = serialize(data).unwrap();
+        let data = solana_bincode::serialize(data).unwrap();
         Self {
             program_id,
             accounts,

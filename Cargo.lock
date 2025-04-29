@@ -59,7 +59,7 @@ dependencies = [
  "cipher",
  "ctr",
  "polyval",
- "subtle 2.6.1",
+ "subtle",
  "zeroize",
 ]
 
@@ -1769,7 +1769,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b584a330336237c1eecd3e94266efb216c56ed91225d634cb2991c5f3fd1aeab"
 dependencies = [
  "generic-array 0.14.7",
- "subtle 2.6.1",
+ "subtle",
 ]
 
 [[package]]
@@ -1821,7 +1821,7 @@ dependencies = [
  "byteorder",
  "digest 0.9.0",
  "rand_core 0.5.1",
- "subtle 2.6.1",
+ "subtle",
  "zeroize",
 ]
 
@@ -1838,7 +1838,7 @@ dependencies = [
  "rand_core 0.6.4",
  "rustc_version 0.4.1",
  "serde",
- "subtle 2.6.1",
+ "subtle",
  "zeroize",
 ]
 
@@ -2007,7 +2007,7 @@ checksum = "9ed9a281f7bc9b7576e61468ba615a66a5c8cfdff42420a70aa82701a3b1e292"
 dependencies = [
  "block-buffer 0.10.4",
  "crypto-common",
- "subtle 2.6.1",
+ "subtle",
 ]
 
 [[package]]
@@ -3480,7 +3480,7 @@ checksum = "d0f6ab710cec28cef759c5f18671a27dae2a5f952cdaaee1d8e2908cb2478a80"
 dependencies = [
  "crunchy",
  "digest 0.9.0",
- "subtle 2.6.1",
+ "subtle",
 ]
 
 [[package]]
@@ -5141,7 +5141,7 @@ dependencies = [
  "ring 0.17.3",
  "rustls-pki-types",
  "rustls-webpki 0.102.8",
- "subtle 2.6.1",
+ "subtle",
  "zeroize",
 ]
 
@@ -9062,7 +9062,7 @@ dependencies = [
  "solana-derivation-path",
  "solana-program",
  "solana-sdk",
- "subtle 2.4.1",
+ "subtle",
  "thiserror 1.0.65",
  "tiny-bip39",
  "wasm-bindgen",
@@ -9122,7 +9122,7 @@ dependencies = [
  "solana-derivation-path",
  "solana-program",
  "solana-sdk",
- "subtle 2.4.1",
+ "subtle",
  "thiserror 1.0.65",
  "tiny-bip39",
  "zeroize",
@@ -9438,11 +9438,6 @@ dependencies = [
  "rustversion",
  "syn 1.0.109",
 ]
-
-[[package]]
-name = "subtle"
-version = "2.4.1"
-source = "git+https://github.com/fluentlabs-xyz/subtle?branch=feat/svm-2.4.1#1c5526d6c5725b75a14de599899a386fcad7ebb6"
 
 [[package]]
 name = "subtle"
@@ -10248,7 +10243,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "fc1de2c688dc15305988b563c3854064043356019f97a4b46276fe734c4f07ea"
 dependencies = [
  "crypto-common",
- "subtle 2.6.1",
+ "subtle",
 ]
 
 [[package]]

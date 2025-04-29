@@ -32,9 +32,12 @@ solana-define-syscall = { workspace = true }
 solana-instruction = { path = ".", features = ["borsh"] }
 
 [features]
-bincode = ["dep:bincode", "dep:serde"]
-borsh = ["dep:borsh"]
 default = ["std"]
+bincode = [
+    "dep:bincode",
+    "dep:serde",
+]
+borsh = ["dep:borsh"]
 frozen-abi = [
     "dep:solana-frozen-abi",
     "dep:solana-frozen-abi-macro",
