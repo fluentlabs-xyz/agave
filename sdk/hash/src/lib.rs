@@ -4,16 +4,16 @@
 #![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 #[cfg(feature = "borsh")]
 use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
-#[cfg(not(feature = "std"))]
+// #[cfg(not(feature = "std"))]
 extern crate alloc;
 #[cfg(any(feature = "std"))]
 extern crate std;
+// #[cfg(not(feature = "std"))]
+use alloc::string::ToString;
 #[cfg(feature = "bytemuck")]
 use bytemuck_derive::{Pod, Zeroable};
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
-// #[cfg(target_arch = "wasm32")]
-use alloc::string::ToString;
 #[cfg(not(feature = "std"))]
 use {
     alloc::{boxed::Box, format, string::String, vec},

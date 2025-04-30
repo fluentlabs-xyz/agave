@@ -1,4 +1,5 @@
 //! Solana compute budget types and default configurations.
+#![cfg_attr(not(feature = "std"), no_std)]
 #![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 
 pub mod compute_budget;

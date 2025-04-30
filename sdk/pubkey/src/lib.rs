@@ -9,7 +9,7 @@ extern crate alloc;
 
 #[cfg(any(feature = "std"))]
 extern crate std;
-#[cfg(any(not(feature = "std")))]
+// #[cfg(any(not(feature = "std")))]
 use alloc::vec::Vec;
 #[cfg(feature = "dev-context-only-utils")]
 use arbitrary::Arbitrary;

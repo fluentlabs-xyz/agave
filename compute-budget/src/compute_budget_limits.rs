@@ -1,7 +1,7 @@
 use {
     crate::prioritization_fee::{PrioritizationFeeDetails, PrioritizationFeeType},
+    core::num::NonZeroU32,
     solana_sdk::{entrypoint::HEAP_LENGTH, fee::FeeBudgetLimits},
-    std::num::NonZeroU32,
 };
 
 /// Roughly 0.5us/page, where page is 32K; given roughly 15CU/us, the
