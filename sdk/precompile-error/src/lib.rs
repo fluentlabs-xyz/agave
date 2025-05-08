@@ -1,3 +1,5 @@
+#![cfg_attr(not(feature = "std"), no_std)]
+
 /// Precompile errors
 use {core::fmt, solana_decode_error::DecodeError};
 
@@ -53,7 +55,7 @@ impl num_traits::ToPrimitive for PrecompileError {
     }
 }
 
-impl std::error::Error for PrecompileError {}
+impl core::error::Error for PrecompileError {}
 
 impl fmt::Display for PrecompileError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

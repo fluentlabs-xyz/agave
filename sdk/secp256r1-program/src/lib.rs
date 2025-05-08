@@ -40,6 +40,7 @@ pub struct Secp256r1SignatureOffsets {
 
 #[cfg(all(not(target_arch = "wasm32"), not(target_os = "solana")))]
 mod target_arch {
+    use solana_precompile_error::PrecompileError;
     use {
         crate::Secp256r1SignatureOffsets,
         bytemuck::bytes_of,
@@ -53,7 +54,6 @@ mod target_arch {
         },
         solana_feature_set::FeatureSet,
         solana_instruction::Instruction,
-        solana_precompile_error::PrecompileError,
     };
 
     pub const COMPRESSED_PUBKEY_SERIALIZED_SIZE: usize = 33;
