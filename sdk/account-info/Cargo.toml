@@ -15,6 +15,7 @@ serde = { workspace = true, default-features = false, optional = true }
 solana-program-error = { workspace = true, default-features = false }
 solana-program-memory = { workspace = true, default-features = false }
 solana-pubkey = { workspace = true, default-features = false }
+solana-bincode = { workspace = true, default-features = false }
 
 [features]
 std = []

@@ -220,17 +220,24 @@ impl<'a> AccountInfo<'a> {
     }
 
     #[cfg(feature = "bincode")]
-    pub fn deserialize_data<T: serde::de::DeserializeOwned>(&self) -> Result<T, bincode::Error> {
-        bincode::deserialize(&self.data.borrow())
+    pub fn deserialize_data<T: serde::de::DeserializeOwned>(
+        &self,
+    ) -> Result<T, bincode::error::DecodeError> {
+        solana_bincode::deserialize(&self.data.borrow())
     }
 
-    #[cfg(feature = "bincode")]
-    pub fn serialize_data<T: serde::Serialize>(&self, state: &T) -> Result<(), bincode::Error> {
-        if bincode::serialized_size(state)? > self.data_len() as u64 {
-            return Err(Box::new(bincode::ErrorKind::SizeLimit));
-        }
-        bincode::serialize_into(&mut self.data.borrow_mut()[..], state)
-    }
+    // #[cfg(feature = "bincode")]
+    // pub fn serialize_data<T: serde::Serialize>(
+    //     &self,
+    //     state: &T,
+    // ) -> Result<(), bincode::error::EncodeError> {
+    //     if solana_bincode::serialized_size(state)? > self.data_len() {
+    //         return Err(bincode::error::EncodeError::Other(
+    //             "account data size limit",
+    //         ));
+    //     }
+    //     solana_bincode::serialize_into(&mut self.data.borrow_mut()[..], state).map(|_| ())
+    // }
 }
 
 /// Constructs an `AccountInfo` from self, used in conversion implementations.
@@ -327,7 +334,7 @@ impl<'a, T: Account> IntoAccountInfo<'a> for &'a mut (Pubkey, T) {
 /// # )?;
 /// # Ok::<(), ProgramError>(())
 /// ```
-pub fn next_account_info<'a, 'b, I: Iterator<Item=&'a AccountInfo<'b>>>(
+pub fn next_account_info<'a, 'b, I: Iterator<Item = &'a AccountInfo<'b>>>(
     iter: &mut I,
 ) -> Result<I::Item, ProgramError> {
     iter.next().ok_or(ProgramError::NotEnoughAccountKeys)
@@ -398,6 +405,7 @@ impl<'a> AsRef<AccountInfo<'a>> for AccountInfo<'a> {
 
 #[cfg(test)]
 mod tests {
+    use alloc::{format, vec};
     use {
         super::*,
         crate::debug_account_data::{Hex, MAX_DEBUG_ACCOUNT_DATA},

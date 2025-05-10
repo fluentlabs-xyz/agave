@@ -839,6 +839,7 @@ version = "2.1.18"
 dependencies = [
  "bincode",
  "serde",
+ "solana-bincode",
  "solana-program-error",
  "solana-program-memory",
  "solana-pubkey",

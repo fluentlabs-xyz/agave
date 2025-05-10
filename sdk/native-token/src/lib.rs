@@ -1,6 +1,7 @@
 //! Definitions for the native SOL token and its fractional lamports.
 
 #![allow(clippy::arithmetic_side_effects)]
+#![cfg_attr(not(feature = "std"), no_std)]
 
 /// There are 10^9 lamports in one SOL
 pub const LAMPORTS_PER_SOL: u64 = 1_000_000_000;
@@ -15,7 +16,7 @@ pub fn sol_to_lamports(sol: f64) -> u64 {
     (sol * LAMPORTS_PER_SOL as f64) as u64
 }
 
-use std::fmt::{Debug, Display, Formatter, Result};
+use core::fmt::{Debug, Display, Formatter, Result};
 pub struct Sol(pub u64);
 
 impl Sol {
