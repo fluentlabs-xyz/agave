@@ -1,7 +1,14 @@
 #![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 //! The Solana [`Account`] type.
+#![cfg_attr(not(feature = "std"), no_std)]
+extern crate alloc;
 
+use alloc::rc::Rc;
+use alloc::string::ToString;
+use alloc::sync::Arc;
+use alloc::vec;
+use alloc::vec::Vec;
 #[cfg(feature = "dev-context-only-utils")]
 use qualifier_attr::qualifiers;
 #[cfg(feature = "serde")]
@@ -11,6 +18,12 @@ use solana_frozen_abi_macro::{frozen_abi, AbiExample};
 #[cfg(feature = "bincode")]
 use solana_program::sysvar::Sysvar;
 use {
+    core::{
+        cell::{Ref, RefCell},
+        fmt,
+        mem::MaybeUninit,
+        ptr,
+    },
     solana_program::{
         account_info::AccountInfo,
         bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable,
@@ -19,14 +32,6 @@ use {
         lamports::LamportsError,
         loader_v4,
         pubkey::Pubkey,
-    },
-    std::{
-        cell::{Ref, RefCell},
-        fmt,
-        mem::MaybeUninit,
-        ptr,
-        rc::Rc,
-        sync::Arc,
     },
 };
 #[cfg(feature = "bincode")]
@@ -165,7 +170,7 @@ impl From<AccountSharedData> for Account {
         let account_data = Arc::make_mut(&mut other.data);
         Self {
             lamports: other.lamports,
-            data: std::mem::take(account_data),
+            data: core::mem::take(account_data),
             owner: other.owner,
             executable: other.executable,
             rent_epoch: other.rent_epoch,
@@ -461,8 +466,8 @@ fn shared_new_data<T: serde::Serialize, U: WritableAccount>(
     lamports: u64,
     state: &T,
     owner: &Pubkey,
-) -> Result<U, bincode::Error> {
-    let data = bincode::serialize(state)?;
+) -> Result<U, solana_bincode::error::EncodeError> {
+    let data = solana_bincode::serialize(state)?;
     Ok(U::create(
         lamports,
         data,
@@ -477,7 +482,7 @@ fn shared_new_ref_data<T: serde::Serialize, U: WritableAccount>(
     lamports: u64,
     state: &T,
     owner: &Pubkey,
-) -> Result<RefCell<U>, bincode::Error> {
+) -> Result<RefCell<U>, solana_bincode::error::EncodeError> {
     Ok(RefCell::new(shared_new_data::<T, U>(
         lamports, state, owner,
     )?))
@@ -489,7 +494,7 @@ fn shared_new_data_with_space<T: serde::Serialize, U: WritableAccount>(
     state: &T,
     space: usize,
     owner: &Pubkey,
-) -> Result<U, bincode::Error> {
+) -> Result<U, solana_bincode::error::EncodeError> {
     let mut account = shared_new::<U>(lamports, space, owner);
 
     shared_serialize_data(&mut account, state)?;
@@ -503,7 +508,7 @@ fn shared_new_ref_data_with_space<T: serde::Serialize, U: WritableAccount>(
     state: &T,
     space: usize,
     owner: &Pubkey,
-) -> Result<RefCell<U>, bincode::Error> {
+) -> Result<RefCell<U>, solana_bincode::error::EncodeError> {
     Ok(RefCell::new(shared_new_data_with_space::<T, U>(
         lamports, state, space, owner,
     )?))
@@ -512,19 +517,21 @@ fn shared_new_ref_data_with_space<T: serde::Serialize, U: WritableAccount>(
 #[cfg(feature = "bincode")]
 fn shared_deserialize_data<T: serde::de::DeserializeOwned, U: ReadableAccount>(
     account: &U,
-) -> Result<T, bincode::Error> {
-    bincode::deserialize(account.data())
+) -> Result<T, solana_bincode::error::DecodeError> {
+    solana_bincode::deserialize(account.data())
 }
 
 #[cfg(feature = "bincode")]
 fn shared_serialize_data<T: serde::Serialize, U: WritableAccount>(
     account: &mut U,
     state: &T,
-) -> Result<(), bincode::Error> {
-    if bincode::serialized_size(state)? > account.data().len() as u64 {
-        return Err(Box::new(bincode::ErrorKind::SizeLimit));
+) -> Result<(), solana_bincode::error::EncodeError> {
+    if solana_bincode::serialized_size(state)? > account.data().len() {
+        return Err(solana_bincode::error::EncodeError::OtherString(
+            "account data size limit".to_string(),
+        ));
     }
-    bincode::serialize_into(account.data_as_mut_slice(), state)
+    solana_bincode::serialize_into(account.data_as_mut_slice(), state).map(|_| ())
 }
 
 impl Account {
@@ -539,7 +546,7 @@ impl Account {
         lamports: u64,
         state: &T,
         owner: &Pubkey,
-    ) -> Result<Self, bincode::Error> {
+    ) -> Result<Self, solana_bincode::error::EncodeError> {
         shared_new_data(lamports, state, owner)
     }
     #[cfg(feature = "bincode")]
@@ -547,7 +554,7 @@ impl Account {
         lamports: u64,
         state: &T,
         owner: &Pubkey,
-    ) -> Result<RefCell<Self>, bincode::Error> {
+    ) -> Result<RefCell<Self>, solana_bincode::error::EncodeError> {
         shared_new_ref_data(lamports, state, owner)
     }
     #[cfg(feature = "bincode")]
@@ -556,7 +563,7 @@ impl Account {
         state: &T,
         space: usize,
         owner: &Pubkey,
-    ) -> Result<Self, bincode::Error> {
+    ) -> Result<Self, solana_bincode::error::EncodeError> {
         shared_new_data_with_space(lamports, state, space, owner)
     }
     #[cfg(feature = "bincode")]
@@ -565,18 +572,23 @@ impl Account {
         state: &T,
         space: usize,
         owner: &Pubkey,
-    ) -> Result<RefCell<Self>, bincode::Error> {
+    ) -> Result<RefCell<Self>, solana_bincode::error::EncodeError> {
         shared_new_ref_data_with_space(lamports, state, space, owner)
     }
     pub fn new_rent_epoch(lamports: u64, space: usize, owner: &Pubkey, rent_epoch: Epoch) -> Self {
         shared_new_rent_epoch(lamports, space, owner, rent_epoch)
     }
     #[cfg(feature = "bincode")]
-    pub fn deserialize_data<T: serde::de::DeserializeOwned>(&self) -> Result<T, bincode::Error> {
+    pub fn deserialize_data<T: serde::de::DeserializeOwned>(
+        &self,
+    ) -> Result<T, solana_bincode::error::DecodeError> {
         shared_deserialize_data(self)
     }
     #[cfg(feature = "bincode")]
-    pub fn serialize_data<T: serde::Serialize>(&mut self, state: &T) -> Result<(), bincode::Error> {
+    pub fn serialize_data<T: serde::Serialize>(
+        &mut self,
+        state: &T,
+    ) -> Result<(), solana_bincode::error::EncodeError> {
         shared_serialize_data(self, state)
     }
 }
@@ -671,7 +683,7 @@ impl AccountSharedData {
         lamports: u64,
         state: &T,
         owner: &Pubkey,
-    ) -> Result<Self, bincode::Error> {
+    ) -> Result<Self, solana_bincode::error::EncodeError> {
         shared_new_data(lamports, state, owner)
     }
     #[cfg(feature = "bincode")]
@@ -679,7 +691,7 @@ impl AccountSharedData {
         lamports: u64,
         state: &T,
         owner: &Pubkey,
-    ) -> Result<RefCell<Self>, bincode::Error> {
+    ) -> Result<RefCell<Self>, solana_bincode::error::EncodeError> {
         shared_new_ref_data(lamports, state, owner)
     }
     #[cfg(feature = "bincode")]
@@ -688,7 +700,7 @@ impl AccountSharedData {
         state: &T,
         space: usize,
         owner: &Pubkey,
-    ) -> Result<Self, bincode::Error> {
+    ) -> Result<Self, solana_bincode::error::EncodeError> {
         shared_new_data_with_space(lamports, state, space, owner)
     }
     #[cfg(feature = "bincode")]
@@ -697,18 +709,23 @@ impl AccountSharedData {
         state: &T,
         space: usize,
         owner: &Pubkey,
-    ) -> Result<RefCell<Self>, bincode::Error> {
+    ) -> Result<RefCell<Self>, solana_bincode::error::EncodeError> {
         shared_new_ref_data_with_space(lamports, state, space, owner)
     }
     pub fn new_rent_epoch(lamports: u64, space: usize, owner: &Pubkey, rent_epoch: Epoch) -> Self {
         shared_new_rent_epoch(lamports, space, owner, rent_epoch)
     }
     #[cfg(feature = "bincode")]
-    pub fn deserialize_data<T: serde::de::DeserializeOwned>(&self) -> Result<T, bincode::Error> {
+    pub fn deserialize_data<T: serde::de::DeserializeOwned>(
+        &self,
+    ) -> Result<T, solana_bincode::error::DecodeError> {
         shared_deserialize_data(self)
     }
     #[cfg(feature = "bincode")]
-    pub fn serialize_data<T: serde::Serialize>(&mut self, state: &T) -> Result<(), bincode::Error> {
+    pub fn serialize_data<T: serde::Serialize>(
+        &mut self,
+        state: &T,
+    ) -> Result<(), solana_bincode::error::EncodeError> {
         shared_serialize_data(self, state)
     }
 }
@@ -721,7 +738,7 @@ pub fn create_account_with_fields<S: Sysvar>(
     sysvar: &S,
     (lamports, rent_epoch): InheritableAccountFields,
 ) -> Account {
-    let data_len = S::size_of().max(bincode::serialized_size(sysvar).unwrap() as usize);
+    let data_len = S::size_of().max(solana_bincode::serialized_size(sysvar).unwrap());
     let mut account = Account::new(lamports, data_len, &solana_program::sysvar::id());
     to_account::<S, Account>(sysvar, &mut account).unwrap();
     account.rent_epoch = rent_epoch;
@@ -753,13 +770,15 @@ pub fn create_account_shared_data_for_test<S: Sysvar>(sysvar: &S) -> AccountShar
 #[cfg(feature = "bincode")]
 /// Create a `Sysvar` from an `Account`'s data.
 pub fn from_account<S: Sysvar, T: ReadableAccount>(account: &T) -> Option<S> {
-    bincode::deserialize(account.data()).ok()
+    solana_bincode::deserialize(account.data()).ok()
 }
 
 #[cfg(feature = "bincode")]
 /// Serialize a `Sysvar` into an `Account`'s data.
 pub fn to_account<S: Sysvar, T: WritableAccount>(sysvar: &S, account: &mut T) -> Option<()> {
-    bincode::serialize_into(account.data_as_mut_slice(), sysvar).ok()
+    solana_bincode::serialize_into(account.data_as_mut_slice(), sysvar)
+        .map(|_| ())
+        .ok()
 }
 
 /// Return the information required to construct an `AccountInfo`.  Used by the

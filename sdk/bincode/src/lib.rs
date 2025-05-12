@@ -6,11 +6,12 @@ extern crate alloc;
 
 use alloc::vec;
 use alloc::vec::Vec;
+use bincode::config::{Configuration, Fixint, LittleEndian};
 use bincode::serde::Compat;
-use bincode::{
-    config::{Configuration, Fixint, LittleEndian},
-    error,
-};
+
+pub mod error {
+    pub use bincode::error::*;
+}
 
 lazy_static::lazy_static! {
     pub static ref CONFIG_DEFAULT: Configuration<LittleEndian, Fixint> = bincode::config::legacy();
