@@ -31,6 +31,10 @@ solana-frozen-abi-macro = { workspace = true, optional = true, features = [
 ] }
 solana-sanitize = { workspace = true }
 bincode = { workspace = true }
+tiny-keccak = { workspace = true, features = ["keccak"] }
+hex = { workspace = true }
+hex-literal = { workspace = true }
+keccak-hash = { workspace = true, default-features = false }
 
 [target.'cfg(target_os = "solana")'.dependencies]
 solana-define-syscall = { workspace = true }

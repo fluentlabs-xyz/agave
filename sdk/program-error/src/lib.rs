@@ -66,6 +66,7 @@ pub enum ProgramError {
     ArithmeticOverflow,
     Immutable,
     IncorrectAuthority,
+    InvalidProgramPrefix,
 }
 
 impl core::error::Error for ProgramError {}
@@ -123,6 +124,8 @@ impl fmt::Display for ProgramError {
             => f.write_str("Account is immutable"),
             ProgramError::IncorrectAuthority
             => f.write_str("Incorrect authority provided"),
+            ProgramError::InvalidProgramPrefix
+            => f.write_str("Invalid program id prefix"),
         }
     }
 }
@@ -177,6 +180,7 @@ impl PrintProgramError for ProgramError {
             Self::ArithmeticOverflow => msg!("Error: ArithmeticOverflow"),
             Self::Immutable => msg!("Error: Immutable"),
             Self::IncorrectAuthority => msg!("Error: IncorrectAuthority"),
+            Self::InvalidProgramPrefix => msg!("Error: InvalidProgramPrefix"),
         }
     }
 }
@@ -222,6 +226,7 @@ impl From<ProgramError> for u64 {
                     error as u64
                 }
             }
+            ProgramError::InvalidProgramPrefix => INCORRECT_PROGRAM_ID,
         }
     }
 }
@@ -310,6 +315,7 @@ impl From<PubkeyError> for ProgramError {
             PubkeyError::MaxSeedLengthExceeded => Self::MaxSeedLengthExceeded,
             PubkeyError::InvalidSeeds => Self::InvalidSeeds,
             PubkeyError::IllegalOwner => Self::IllegalOwner,
+            PubkeyError::InvalidProgramPrefix => Self::InvalidProgramPrefix,
         }
     }
 }
