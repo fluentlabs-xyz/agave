@@ -1,6 +1,6 @@
 //! Solana account addresses.
 #![no_std]
-#![feature(error_in_core)]
+// #![feature(error_in_core)]
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 #![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 #![allow(clippy::arithmetic_side_effects)]
@@ -846,7 +846,7 @@ impl Pubkey {
         // if deployer[0..SVM_ADDRESS_PREFIX.len()] != SVM_ADDRESS_PREFIX {
         //     return Err(PubkeyError::InvalidProgramPrefix);
         // }
-        let mut salt;
+        let salt;
         if seeds.len() <= 0 {
             return Err(PubkeyError::InvalidSeeds);
         } else {

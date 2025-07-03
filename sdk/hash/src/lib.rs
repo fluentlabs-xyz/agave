@@ -1,5 +1,5 @@
 #![no_std]
-#![feature(error_in_core)]
+// #![feature(error_in_core)]
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 #![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 #[cfg(feature = "borsh")]
@@ -9,17 +9,10 @@ extern crate alloc;
 #[cfg(any(feature = "std"))]
 extern crate std;
 // #[cfg(not(feature = "std"))]
-use alloc::string::ToString;
 #[cfg(feature = "bytemuck")]
 use bytemuck_derive::{Pod, Zeroable};
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
-#[cfg(not(feature = "std"))]
-use {
-    alloc::{boxed::Box, format, string::String, vec},
-    // js_sys::{Array, Uint8Array},
-    // wasm_bindgen::{prelude::*, JsCast},
-};
 use {
     core::{
         convert::TryFrom,

@@ -1,5 +1,5 @@
 #![cfg_attr(not(feature = "std"), no_std)]
-#![feature(error_in_core)]
+// #![feature(error_in_core)]
 //! A trait for sanitizing values and members of over the wire messages.
 extern crate alloc;
 

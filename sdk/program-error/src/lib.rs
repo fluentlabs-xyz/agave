@@ -2,9 +2,8 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 #![allow(clippy::arithmetic_side_effects)]
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
-#![feature(error_in_core)]
+// #![feature(error_in_core)]
 
-use alloc::format;
 #[cfg(feature = "borsh")]
 use borsh::io::Error as BorshIoError;
 #[cfg(feature = "serde")]

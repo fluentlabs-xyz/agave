@@ -1,4 +1,4 @@
-#![feature(error_in_core)]
+// #![feature(error_in_core)]
 #![cfg_attr(not(feature = "std"), no_std)]
 
 /// Print a message to the log.
@@ -41,6 +41,7 @@ pub mod syscalls;
 
 /// Print a string to the log.
 #[inline]
+#[allow(unused_variables)]
 pub fn sol_log(message: &str) {
     #[cfg(target_os = "solana")]
     unsafe {
