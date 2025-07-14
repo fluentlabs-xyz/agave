@@ -2,9 +2,7 @@
 //!
 //! [Poseidon]: https://www.poseidon-hash.info/
 
-#![cfg_attr(feature = "std", no_std)]
-
-// use thiserror::Error;
+#![cfg_attr(not(feature = "std"), no_std)]
 
 extern crate alloc;
 

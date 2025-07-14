@@ -7497,7 +7497,6 @@ dependencies = [
  "ark-bn254",
  "light-poseidon",
  "solana-define-syscall",
- "thiserror 1.0.65",
 ]
 
 [[package]]
