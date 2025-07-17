@@ -1,3 +1,4 @@
+use alloc::vec::Vec;
 use bytemuck_derive::{Pod, Zeroable};
 pub use target_arch::*;
 
