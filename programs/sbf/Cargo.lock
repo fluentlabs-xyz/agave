@@ -5107,8 +5107,6 @@ dependencies = [
  "ark-ff",
  "ark-serialize",
  "bytemuck",
- "solana-program",
- "thiserror 1.0.65",
 ]
 
 [[package]]

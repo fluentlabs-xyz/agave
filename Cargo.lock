@@ -6152,8 +6152,6 @@ dependencies = [
  "serde",
  "serde_derive",
  "serde_json",
- "solana-program",
- "thiserror 1.0.65",
 ]
 
 [[package]]

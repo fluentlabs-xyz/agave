@@ -21,6 +21,7 @@ solana-program = { workspace = true }
 curve25519-dalek = { workspace = true, features = ["serde"] }
 
 [features]
+default = []
 std = []
 
 [lints]
