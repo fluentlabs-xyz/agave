@@ -99,8 +99,8 @@ pub struct PodG1(pub [u8; 64]);
 pub struct PodG2(pub [u8; 128]);
 
 #[cfg(not(target_os = "solana"))]
-mod target_arch {
-    use {
+pub mod target_arch {
+    pub use {
         super::*,
         ark_bn254::{self, Config},
         ark_ec::{self, models::bn::Bn, pairing::Pairing, AffineRepr},
@@ -108,8 +108,8 @@ mod target_arch {
         ark_serialize::{CanonicalDeserialize, CanonicalSerialize, Compress, Validate},
     };
 
-    type G1 = ark_bn254::g1::G1Affine;
-    type G2 = ark_bn254::g2::G2Affine;
+    pub type G1 = ark_bn254::g1::G1Affine;
+    pub type G2 = ark_bn254::g2::G2Affine;
 
     impl TryFrom<PodG1> for G1 {
         type Error = AltBn128Error;
