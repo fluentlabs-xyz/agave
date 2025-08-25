@@ -6,6 +6,8 @@
 //!
 //! [spl]: https://github.com/solana-labs/solana-program-library
 
+#![cfg_attr(not(feature = "std"), no_std)]
+
 use solana_program_error::ProgramError;
 
 /// Check if a program account state is initialized
