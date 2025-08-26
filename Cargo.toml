@@ -494,7 +494,7 @@ solana-program = { path = "sdk/program", version = "=2.1.18", default-features =
 solana-program-error = { path = "sdk/program-error", version = "=2.1.18", default-features = false }
 solana-program-memory = { path = "sdk/program-memory", version = "=2.1.18", default-features = false }
 solana-program-option = { path = "sdk/program-option", version = "=2.1.18" }
-solana-program-pack = { path = "sdk/program-pack", version = "=2.1.18" }
+solana-program-pack = { path = "sdk/program-pack", version = "=2.1.18", default-features = false }
 solana-program-runtime = { path = "program-runtime", version = "=2.1.18" }
 solana-program-test = { path = "program-test", version = "=2.1.18" }
 solana-pubkey = { path = "sdk/pubkey", version = "=2.1.18", default-features = false }
