@@ -312,7 +312,7 @@ getrandom = "0.2.10"
 goauth = "0.13.1"
 governor = "0.6.3"
 hex = { version = "0.4.3", default-features = false, features = ["alloc"] }
-hex-literal = { version = "1.0.0" }
+hex-literal = { version = "0.4.1" }
 hidapi = { version = "2.6.3", default-features = false }
 histogram = "0.6.9"
 hmac = "0.12.1"
